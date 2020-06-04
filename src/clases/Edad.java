@@ -8,6 +8,7 @@ public class Edad {
 	    edad = value;
 	  }
 		  
+	  
 	  public static Edad valueOf(int value) throws Exception {
 	     if(value < 0) {
 	        throw new Exception("Edad inválida");
