@@ -1,4 +1,4 @@
-package clases;
+package entidades;
 
 public class Edad {
 
@@ -7,7 +7,6 @@ public class Edad {
 	  private Edad(int value) {
 	    edad = value;
 	  }
-		  
 	  
 	  public static Edad valueOf(int value) throws Exception {
 	     if(value < 0) {

@@ -1,11 +1,11 @@
-package clases;
+package entidades;
 
 public class Practica {
 	
 	private String codigo;
 	private String nombre;
 	private String grupo;
-	private String valoresCríticos;
+	private String valoresCriticos;
 	private String valoresReservados;
 	private int horasEsperaResultados;
 	
@@ -28,10 +28,10 @@ public class Practica {
 		this.grupo = grupo;
 	}
 	public String getValoresCríticos() {
-		return valoresCríticos;
+		return valoresCriticos;
 	}
 	public void setValoresCríticos(String valoresCríticos) {
-		this.valoresCríticos = valoresCríticos;
+		this.valoresCriticos = valoresCríticos;
 	}
 	public String getValoresReservados() {
 		return valoresReservados;

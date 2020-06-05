@@ -1,16 +1,24 @@
-package clases;
+package entidades;
 
 import java.util.Date;
 import java.util.List;
 
 public class Peticion {
 
+	private String codigo;
 	private Paciente paciente;
 	private ObraSocial obraSocial;
 	private Date FechaDeCarga;
-	private List<Practica> practicas;
+	private List<Estudio> Estudios;
 	private Date FechaDeEntrega;
 	
+	
+	public String getCodigo() {
+		return codigo;
+	}
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
 	public Paciente getPaciente() {
 		return paciente;
 	}
@@ -29,11 +37,12 @@ public class Peticion {
 	public void setFechaDeCarga(Date fechaDeCarga) {
 		FechaDeCarga = fechaDeCarga;
 	}
-	public List<Practica> getPracticas() {
-		return practicas;
+	public List<Estudio> getEstudios() {
+		return Estudios;
 	}
-	public void setPracticas(List<Practica> practicas) {
-		this.practicas = practicas;
+
+	public void setEstudios(List<Estudio> estudios) {
+		Estudios = estudios;
 	}
 	public Date getFechaDeEntrega() {
 		return FechaDeEntrega;
@@ -41,5 +50,5 @@ public class Peticion {
 	public void setFechaDeEntrega(Date fechaDeEntrega) {
 		FechaDeEntrega = fechaDeEntrega;
 	}
-	
+
 }

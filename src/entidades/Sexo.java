@@ -1,4 +1,4 @@
-package clases;
+package entidades;
 
 import java.util.stream.Stream;
 

@@ -1,4 +1,4 @@
-package clases;
+package entidades;
 
 public class Paciente extends Persona {
 
