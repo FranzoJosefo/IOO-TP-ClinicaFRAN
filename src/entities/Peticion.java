@@ -13,14 +13,16 @@ public class Peticion {
 	private Date fechaDeCarga;
 	private List<Estudio> estudios;
 	private Date fechaDeEntrega;
+	private String codigoSucursal;
 	
-	public Peticion(String codigo, Paciente paciente, ObraSocial obraSocial, Date fechaDeCarga, List<Estudio> estudios, Date fechaDeEntrega) {
+	public Peticion(String codigo, Paciente paciente, ObraSocial obraSocial, Date fechaDeCarga, List<Estudio> estudios, Date fechaDeEntrega, String codigoSucursal) {
 		setCodigo(codigo);
 		setPaciente(paciente);
 		setObraSocial(obraSocial);
 		setFechaDeCarga(fechaDeCarga);
 		setEstudios(estudios);
 		setFechaDeEntrega(fechaDeEntrega);
+		setCodigoSucursal(codigoSucursal);
 	}
 	
 	public String getCodigo() {
@@ -58,6 +60,14 @@ public class Peticion {
 	}
 	public void setFechaDeEntrega(Date fechaDeEntrega) {
 		this.fechaDeEntrega = fechaDeEntrega;
+	}
+
+	public String getCodigoSucursal() {
+		return codigoSucursal;
+	}
+
+	public void setCodigoSucursal(String codigoSucursal) {
+		this.codigoSucursal = codigoSucursal;
 	}
 
 }

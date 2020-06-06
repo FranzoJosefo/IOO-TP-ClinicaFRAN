@@ -3,7 +3,7 @@ package entities;
 public abstract class Persona {
 
 	private String nombre;
-	private String domicilio;
+	private Direccion direccion;
 	private Long dni;
 	private String mail;
 	
@@ -15,12 +15,12 @@ public abstract class Persona {
 		this.nombre = nombre;
 	}
 	
-	public String getDomicilio() {
-		return domicilio;
+	public Direccion getDireccion() {
+		return direccion;
 	}
 	
-	public void setDomicilio(String domicilio) {
-		this.domicilio = domicilio;
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
 	}
 	
 	public Long getDni() {

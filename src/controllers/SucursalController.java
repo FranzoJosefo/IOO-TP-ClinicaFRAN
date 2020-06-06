@@ -28,6 +28,22 @@ public enum SucursalController {
 		.orElseThrow(() -> new Exception("No se ha encontrado la sucursal"));
 	}
 	
+	public void deleteSucursal(String codigoSucursal) throws Exception {
+		if(PeticionController.INSTANCE.hasPeticionesFinalizadas(codigoSucursal)) {
+			throw new Exception("No se puede eliminar la sucursal porque tiene peticiones con estudios finalizados.");
+		}
+		PeticionController.INSTANCE.migratePeticiones(codigoSucursal, findAnotherSucursal(codigoSucursal));
+		sucursales.removeIf(s -> s.getCodigo().equals(codigoSucursal));
+	}
+	
+	private String findAnotherSucursal(String codigoSucursal) throws Exception {
+		return sucursales.stream()
+				.map(Sucursal::getCodigo)
+				.filter(cs -> !cs.equals(codigoSucursal))
+				.findFirst()
+				.orElseThrow(() -> new Exception("No existe otra sucursal."));
+	}
+	
 	private String generateCodigoSucursal() {
 		sucursalesCreadas++;
 		return CodigoGenerator.generateCodigo(PrefijoCodigo.SUCURSAL, sucursalesCreadas);

@@ -36,6 +36,13 @@ public enum PracticaController {
 		}
 	}
 	
+	public void deletePractica(String codigoPractica) throws Exception {
+		if(PeticionController.INSTANCE.hasEstudiosEnProceso(codigoPractica)) {
+			throw new Exception("No es posible eliminar la practica porque tiene estudios en proceso.");
+		}
+		practicas.removeIf(p -> p.getCodigo().equals(codigoPractica));
+	}
+	
 	private String generateCodigoPractica() {
 		practicasCreadas++;
 		return CodigoGenerator.generateCodigo(PrefijoCodigo.PRACTICA, practicasCreadas);

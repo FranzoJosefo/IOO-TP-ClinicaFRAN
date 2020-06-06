@@ -5,9 +5,10 @@ import java.util.stream.Stream;
 public enum PrefijoCodigo {
 
 	PETICION("PET"),
-	PRACTICA("PRA"),
+	PRACTICA("PTA"),
 	SUCURSAL("SUC"),
-	USUARIO("USU");
+	USUARIO("USR"),
+	PACIENTE("PAC");
 
     private String prefijoCodigo;
 
