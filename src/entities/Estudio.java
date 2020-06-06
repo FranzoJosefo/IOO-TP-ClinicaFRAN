@@ -1,4 +1,4 @@
-package entidades;
+package entities;
 
 import Interfaces.Resultado;
 
@@ -6,6 +6,10 @@ public class Estudio {
 	
 	private String practicaCodigo;
 	private Resultado resultado;
+	
+	public Estudio(String practicaCodigo) {
+		setPracticaCodigo(practicaCodigo);
+	}
 	
 	public Resultado getResultado() {
 		return resultado;

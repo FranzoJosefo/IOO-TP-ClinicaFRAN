@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Interfaces.PracticaValores;
-import entidades.Practica;
+import entities.Practica;
 import enums.PrefijoCodigo;
 import utils.CodigoGenerator;
 
@@ -15,8 +15,8 @@ public enum PracticaController {
 	private int practicasCreadas = 0;
 	private List<Practica> practicas = new ArrayList();
 	
-	public void createPractica(String codigo, String nombre, String grupo, int horasEsperaResultado, PracticaValores valoresNormales, PracticaValores valoresCriticos, PracticaValores valoresReservados) {
-		Practica newPractica = new Practica(generateCodigoPractica(), nombre, grupo, horasEsperaResultado, valoresNormales, valoresCriticos, valoresReservados);
+	public void createPractica(String codigo, String nombre, String grupo, int horasEsperaResultado, boolean habilitada, PracticaValores valoresNormales, PracticaValores valoresCriticos, PracticaValores valoresReservados) {
+		Practica newPractica = new Practica(generateCodigoPractica(), nombre, grupo, horasEsperaResultado, habilitada, valoresNormales, valoresCriticos, valoresReservados);
 		practicas.add(newPractica);
 	}
 	
@@ -25,6 +25,15 @@ public enum PracticaController {
 		.filter(p -> p.getCodigo().equals(codigoPractica))
 		.findFirst()
 		.orElseThrow(() -> new Exception("No se ha encontrado la práctica"));
+	}
+	
+	public boolean isPracticaHabilitada(String codigoPractica) {
+		try {
+		return getPractica(codigoPractica)
+				.isHabilitada();
+		} catch (Exception e) {
+			return false;
+		}
 	}
 	
 	private String generateCodigoPractica() {

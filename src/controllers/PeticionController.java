@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import Interfaces.Resultado;
-import entidades.Estudio;
-import entidades.Paciente;
-import entidades.Peticion;
+import entities.Estudio;
+import entities.Paciente;
+import entities.Peticion;
 import enums.ObraSocial;
 import enums.PrefijoCodigo;
 import utils.CodigoGenerator;
@@ -20,8 +21,8 @@ public enum PeticionController {
 	private int peticionesCreadas = 0;
 	private List<Peticion> peticiones = new ArrayList();
 	
-	public void createPeticion(Paciente paciente, ObraSocial obraSocial, Date fechaDeCarga, List<Estudio> estudios, Date fechaDeEntrega) {
-		Peticion newPeticion = new Peticion(generateCodigoPeticion(), paciente, obraSocial, fechaDeCarga, estudios, fechaDeEntrega);
+	public void createPeticion(Paciente paciente, ObraSocial obraSocial, Date fechaDeCarga, List<String> estudios, Date fechaDeEntrega) {
+		Peticion newPeticion = new Peticion(generateCodigoPeticion(), paciente, obraSocial, fechaDeCarga, createEstudios(estudios), fechaDeEntrega);
 		peticiones.add(newPeticion);
 	}
 	
@@ -44,6 +45,13 @@ public enum PeticionController {
 		} else {
 			throw new Exception("No se ha encontrado el estudio asociado a dicha práctica");
 		}
+	}
+	
+	private List<Estudio> createEstudios(List<String> estudios) {
+		return estudios.stream()
+		.filter(PracticaController.INSTANCE::isPracticaHabilitada)
+		.map(Estudio::new)
+		.collect(Collectors.toList());
 	}
 	
 	private String generateCodigoPeticion() {

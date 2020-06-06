@@ -3,9 +3,9 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import entidades.Direccion;
-import entidades.Sucursal;
-import entidades.Usuario;
+import entities.Direccion;
+import entities.Sucursal;
+import entities.Usuario;
 import enums.PrefijoCodigo;
 import utils.CodigoGenerator;
 
