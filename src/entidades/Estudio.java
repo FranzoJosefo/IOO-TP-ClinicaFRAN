@@ -4,20 +4,20 @@ import Interfaces.Resultado;
 
 public class Estudio {
 	
-	private Practica practica;
+	private String practicaCodigo;
 	private Resultado resultado;
 	
-	public Practica getPractica() {
-		return practica;
-	}
-	public void setPractica(Practica practica) {
-		this.practica = practica;
-	}
 	public Resultado getResultado() {
 		return resultado;
 	}
 	public void setResultado(Resultado resultado) {
 		this.resultado = resultado;
+	}
+	public String getPracticaCodigo() {
+		return practicaCodigo;
+	}
+	public void setPracticaCodigo(String practicaCodigo) {
+		this.practicaCodigo = practicaCodigo;
 	}
 	
 }

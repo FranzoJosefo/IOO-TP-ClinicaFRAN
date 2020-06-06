@@ -1,21 +1,27 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import Interfaces.Resultado;
 import entidades.Estudio;
+import entidades.Paciente;
 import entidades.Peticion;
+import enums.ObraSocial;
+import enums.PrefijoCodigo;
+import utils.CodigoGenerator;
 
 public enum PeticionController {
 	
 	INSTANCE;
 	
+	private int peticionesCreadas = 0;
 	private List<Peticion> peticiones = new ArrayList();
 	
-	public void createPeticion() {
-		Peticion newPeticion = new Peticion();
+	public void createPeticion(Paciente paciente, ObraSocial obraSocial, Date fechaDeCarga, List<Estudio> estudios, Date fechaDeEntrega) {
+		Peticion newPeticion = new Peticion(generateCodigoPeticion(), paciente, obraSocial, fechaDeCarga, estudios, fechaDeEntrega);
 		peticiones.add(newPeticion);
 	}
 	
@@ -30,7 +36,7 @@ public enum PeticionController {
 		Optional<Estudio> estudio = getPeticion(codigoPeticion)
 				.getEstudios()
 				.stream()
-				.filter(e -> e.getPractica().getCodigo().equals(codigoPractica))
+				.filter(e -> codigoPractica.equals(e.getPracticaCodigo()))
 				.findFirst();
 
 		if(estudio.isPresent()) {
@@ -38,6 +44,11 @@ public enum PeticionController {
 		} else {
 			throw new Exception("No se ha encontrado el estudio asociado a dicha práctica");
 		}
+	}
+	
+	private String generateCodigoPeticion() {
+		peticionesCreadas++;
+		return CodigoGenerator.generateCodigo(PrefijoCodigo.PETICION, peticionesCreadas);
 	}
 	
 }

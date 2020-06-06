@@ -2,20 +2,33 @@ package entidades;
 
 public class Sucursal {
 	
-	private int numero;
-	private String direccion;
+	private String codigo;
+	private Direccion direccion;
+	private Usuario responsable;
 	
-	public int getNumero() {
-		return numero;
+	public Sucursal(String codigo, Direccion direccion, Usuario responsable) {
+		setCodigo(codigo);
+		setDireccion(direccion);
+		setResponsable(responsable);
 	}
-	public void setNumero(int numero) {
-		this.numero = numero;
+	
+	public String getCodigo() {
+		return codigo;
 	}
-	public String getDireccion() {
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+	public Direccion getDireccion() {
 		return direccion;
 	}
-	public void setDireccion(String direccion) {
+	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
+	}
+	public Usuario getResponsable() {
+		return responsable;
+	}
+	public void setResponsable(Usuario responsable) {
+		this.responsable = responsable;
 	}
 	
 }

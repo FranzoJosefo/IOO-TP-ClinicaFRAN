@@ -1,5 +1,7 @@
 package entidades;
 
+import enums.Sexo;
+
 public class Paciente extends Persona {
 
 	private Sexo sexo;

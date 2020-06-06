@@ -1,13 +1,26 @@
 package entidades;
 
+import Interfaces.PracticaValores;
+
 public class Practica {
 	
 	private String codigo;
 	private String nombre;
 	private String grupo;
-	private String valoresCriticos;
-	private String valoresReservados;
-	private int horasEsperaResultados;
+	private int horasEsperaResultado;
+	private PracticaValores valoresNormales;
+	private PracticaValores valoresCriticos;
+	private PracticaValores valoresReservados;
+	
+	public Practica(String codigo, String nombre, String grupo, int horasEsperaResultado, PracticaValores valoresNormales, PracticaValores valoresCriticos, PracticaValores valoresReservados) {
+		setCodigo(codigo);
+		setNombre(nombre);
+		setGrupo(grupo);
+		setHorasEsperaResultado(horasEsperaResultado);
+		setValoresNormales(valoresNormales);
+		setValoresCriticos(valoresCriticos);
+		setValoresReservados(valoresReservados);
+	}
 	
 	public String getCodigo() {
 		return codigo;
@@ -27,23 +40,35 @@ public class Practica {
 	public void setGrupo(String grupo) {
 		this.grupo = grupo;
 	}
-	public String getValoresCríticos() {
+	public int getHorasEsperaResultado() {
+		return horasEsperaResultado;
+	}
+	public void setHorasEsperaResultado(int horasEsperaResultado) {
+		this.horasEsperaResultado = horasEsperaResultado;
+	}
+
+	public PracticaValores getValoresNormales() {
+		return valoresNormales;
+	}
+
+	public void setValoresNormales(PracticaValores valoresNormales) {
+		this.valoresNormales = valoresNormales;
+	}
+
+	public PracticaValores getValoresCriticos() {
 		return valoresCriticos;
 	}
-	public void setValoresCríticos(String valoresCríticos) {
-		this.valoresCriticos = valoresCríticos;
+
+	public void setValoresCriticos(PracticaValores valoresCriticos) {
+		this.valoresCriticos = valoresCriticos;
 	}
-	public String getValoresReservados() {
+
+	public PracticaValores getValoresReservados() {
 		return valoresReservados;
 	}
-	public void setValoresReservados(String valoresReservados) {
+
+	public void setValoresReservados(PracticaValores valoresReservados) {
 		this.valoresReservados = valoresReservados;
-	}
-	public int getHorasEsperaResultados() {
-		return horasEsperaResultados;
-	}
-	public void setHorasEsperaResultados(int horasEsperaResultados) {
-		this.horasEsperaResultados = horasEsperaResultados;
 	}
 	
 }

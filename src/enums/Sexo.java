@@ -1,4 +1,4 @@
-package entidades;
+package enums;
 
 import java.util.stream.Stream;
 

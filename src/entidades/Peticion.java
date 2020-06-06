@@ -3,15 +3,25 @@ package entidades;
 import java.util.Date;
 import java.util.List;
 
+import enums.ObraSocial;
+
 public class Peticion {
 
 	private String codigo;
 	private Paciente paciente;
 	private ObraSocial obraSocial;
-	private Date FechaDeCarga;
-	private List<Estudio> Estudios;
-	private Date FechaDeEntrega;
+	private Date fechaDeCarga;
+	private List<Estudio> estudios;
+	private Date fechaDeEntrega;
 	
+	public Peticion(String codigo, Paciente paciente, ObraSocial obraSocial, Date fechaDeCarga, List<Estudio> estudios, Date fechaDeEntrega) {
+		setCodigo(codigo);
+		setPaciente(paciente);
+		setObraSocial(obraSocial);
+		setFechaDeCarga(fechaDeCarga);
+		setEstudios(estudios);
+		setFechaDeEntrega(fechaDeEntrega);
+	}
 	
 	public String getCodigo() {
 		return codigo;
@@ -32,23 +42,22 @@ public class Peticion {
 		this.obraSocial = obraSocial;
 	}
 	public Date getFechaDeCarga() {
-		return FechaDeCarga;
+		return fechaDeCarga;
 	}
 	public void setFechaDeCarga(Date fechaDeCarga) {
-		FechaDeCarga = fechaDeCarga;
+		this.fechaDeCarga = fechaDeCarga;
 	}
 	public List<Estudio> getEstudios() {
-		return Estudios;
+		return estudios;
 	}
-
 	public void setEstudios(List<Estudio> estudios) {
-		Estudios = estudios;
+		this.estudios = estudios;
 	}
 	public Date getFechaDeEntrega() {
-		return FechaDeEntrega;
+		return fechaDeEntrega;
 	}
 	public void setFechaDeEntrega(Date fechaDeEntrega) {
-		FechaDeEntrega = fechaDeEntrega;
+		this.fechaDeEntrega = fechaDeEntrega;
 	}
 
 }
