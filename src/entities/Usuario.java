@@ -2,17 +2,17 @@ package entities;
 
 import java.util.Date;
 
-import enums.TipoUsuario;
+import enums.UsuarioTipo;
 
 public class Usuario extends Persona {
 
 	private String codigo;
 	private String nombreUsuario;
 	private String password;
-	private TipoUsuario tipoUsuario;
+	private UsuarioTipo tipoUsuario;
 	private Date fechaNacimiento;
 	
-	public Usuario (String codigo, String nombreUsuario, String password, TipoUsuario tipoUsuario, Date fechaNacimiento, String nombre, Long dni, Direccion direccion, String mail) {
+	public Usuario (String codigo, String nombreUsuario, String password, UsuarioTipo tipoUsuario, Date fechaNacimiento, String nombre, Long dni, Direccion direccion, String mail) {
 		setCodigo(codigo);
 		setNombreUsuario(nombreUsuario);
 		setPassword(password);
@@ -56,11 +56,11 @@ public class Usuario extends Persona {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-	public TipoUsuario getTipoUsuario() {
+	public UsuarioTipo getTipoUsuario() {
 		return tipoUsuario;
 	}
 
-	public void setTipoUsuario(TipoUsuario tipoUsuario) {
+	public void setTipoUsuario(UsuarioTipo tipoUsuario) {
 		this.tipoUsuario = tipoUsuario;
 	}
 	

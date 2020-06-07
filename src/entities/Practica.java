@@ -1,7 +1,5 @@
 package entities;
 
-import Interfaces.PracticaValores;
-
 public class Practica {
 	
 	private String codigo;

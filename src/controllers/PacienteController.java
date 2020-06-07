@@ -10,7 +10,7 @@ import entities.Paciente;
 import entities.Usuario;
 import enums.PrefijoCodigo;
 import enums.Sexo;
-import enums.TipoUsuario;
+import enums.UsuarioTipo;
 import utils.CodigoGenerator;
 
 public enum PacienteController {
