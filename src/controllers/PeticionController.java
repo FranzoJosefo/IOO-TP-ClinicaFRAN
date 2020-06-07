@@ -10,6 +10,7 @@ import Interfaces.Resultado;
 import entities.Estudio;
 import entities.Paciente;
 import entities.Peticion;
+import entities.Practica;
 import enums.ObraSocial;
 import enums.PrefijoCodigo;
 import utils.CodigoGenerator;
@@ -30,7 +31,7 @@ public enum PeticionController {
 		return peticiones.stream()
 		.filter(p -> p.getCodigo().equals(codigoPeticion))
 		.findFirst()
-		.orElseThrow(() -> new Exception("No se ha encontrado la petición"));
+		.orElseThrow(() -> new Exception("No se ha encontrado la peticion"));
 	}
 	
 	public void cargarResultado(String codigoPeticion, String codigoPractica, Resultado resultado) throws Exception {
@@ -40,10 +41,10 @@ public enum PeticionController {
 				.filter(e -> codigoPractica.equals(e.getPracticaCodigo()))
 				.findFirst();
 
-		if(estudio.isPresent()) {
+		if(estudio.isPresent() && checkResultadoValido(estudio, resultado)) {
 			estudio.get().setResultado(resultado);
 		} else {
-			throw new Exception("No se ha encontrado el estudio asociado a dicha práctica");
+			throw new Exception("No se ha encontrado el estudio asociado a dicha practica");
 		}
 	}
 	
@@ -60,6 +61,11 @@ public enum PeticionController {
 			.findFirst()
 			.isPresent();
 	}
+	
+	public boolean checkResultadoValido(Estudio estudio, Resultado resultado) {
+		Practica practica = PracticaController.INSTANCE.getPractica(estudio.getPracticaCodigo());
+		
+	} 
 	
 	// TODO
 	private boolean isEstudioWithResultadosReservados(Estudio estudio) {

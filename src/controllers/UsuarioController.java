@@ -3,6 +3,7 @@ package controllers;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import entities.Direccion;
 import entities.Usuario;
@@ -23,10 +24,19 @@ public enum UsuarioController {
 	}
 	
 	public Usuario getUsuario(String codigoUsuario) throws Exception {
+		return findUsuario(codigoUsuario)
+				.orElseThrow(() -> new Exception("No se ha encontrado el usuario"));
+	}
+	
+	public boolean existsUsuario(String codigoUsuario) {
+		return findUsuario(codigoUsuario)
+				.isPresent();
+	}
+	
+	public Optional<Usuario> findUsuario(String codigoUsuario) {
 		return usuarios.stream()
-		.filter(u -> u.getCodigo().equals(codigoUsuario))
-		.findFirst()
-		.orElseThrow(() -> new Exception("No se ha encontrado el usuario"));
+				.filter(u -> u.getCodigo().equals(codigoUsuario))
+				.findFirst();
 	}
 	
 	public void deleteUsuario(String codigoUsuario) {

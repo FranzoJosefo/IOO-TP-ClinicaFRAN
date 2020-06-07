@@ -3,6 +3,7 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import dto.SucursalDTO;
 import entities.Direccion;
 import entities.Sucursal;
 import entities.Usuario;
@@ -16,8 +17,9 @@ public enum SucursalController {
 	private int sucursalesCreadas = 0;
 	private List<Sucursal> sucursales = new ArrayList();
 	
-	public void createSucursal(String codigo, Direccion direccion, Usuario responsable) {
-		Sucursal newSucursal = new Sucursal(generateCodigoSucursal(), direccion, responsable);
+	public void createSucursal(SucursalDTO sucursalDto) {
+		checkResponsableExists(sucursalDto.getResponsableCodigo());
+		Sucursal newSucursal = new Sucursal(generateCodigoSucursal(), direccion, sucursalDto.getResponsableCodigo());
 		sucursales.add(newSucursal);
 	}
 	
@@ -34,6 +36,12 @@ public enum SucursalController {
 		}
 		PeticionController.INSTANCE.migratePeticiones(codigoSucursal, findAnotherSucursal(codigoSucursal));
 		sucursales.removeIf(s -> s.getCodigo().equals(codigoSucursal));
+	}
+	
+	private void checkResponsableExists(String codigoUsuario) throws Exception {
+		if(!UsuarioController.INSTANCE.existsUsuario(codigoUsuario)) {
+			throw new Exception(String.format("El usuario %s para asignar como responsable no existe.", codigoUsuario));
+		}
 	}
 	
 	private String findAnotherSucursal(String codigoSucursal) throws Exception {

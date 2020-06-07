@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import dto.PacienteDTO;
 import entities.Direccion;
 import entities.Edad;
 import entities.Paciente;
@@ -22,7 +23,7 @@ public enum PacienteController {
 	
 	public void createPaciente(String codigo, String nombre, Long dni, Direccion direccion, String mail, Sexo sexo, Edad edad) {
 		Paciente newPaciente = new Paciente(generateCodigoPaciente(), nombre, dni, direccion, mail, sexo, edad);
-		pacientes.add(newPaciente);
+		pacientes.add(newPaciente);		
 	}
 	
 	public Paciente getPaciente(String codigoPaciente) throws Exception {
