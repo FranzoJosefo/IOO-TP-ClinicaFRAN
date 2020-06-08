@@ -2,9 +2,6 @@ package dto;
 
 import java.util.Date;
 
-import entities.Direccion;
-import entities.Edad;
-import enums.Sexo;
 import enums.UsuarioTipo;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +16,7 @@ public class UsuarioDTO {
 	private UsuarioTipo tipoUsuario;
 	private Date fechaNacimiento;
 	private String nombre;
-	private Direccion direccion;
+	private DireccionDTO direccion;
 	private Long dni;
 	private String mail;
 	

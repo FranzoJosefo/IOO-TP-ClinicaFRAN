@@ -1,6 +1,5 @@
 package dto;
 
-import entities.Direccion;
 import entities.Edad;
 import enums.Sexo;
 import lombok.Builder;
@@ -14,7 +13,7 @@ public class PacienteDTO {
 	private Sexo sexo;
 	private Edad edad;
 	private String nombre;
-	private Direccion direccion;
+	private DireccionDTO direccion;
 	private Long dni;
 	private String mail;
 	

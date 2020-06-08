@@ -8,16 +8,16 @@ import enums.ObraSocial;
 public class Peticion {
 
 	private String codigo;
-	private Paciente paciente;
+	private String pacienteCodigo;
 	private ObraSocial obraSocial;
 	private Date fechaDeCarga;
 	private List<Estudio> estudios;
 	private Date fechaDeEntrega;
 	private String codigoSucursal;
 	
-	public Peticion(String codigo, Paciente paciente, ObraSocial obraSocial, Date fechaDeCarga, List<Estudio> estudios, Date fechaDeEntrega, String codigoSucursal) {
+	public Peticion(String codigo, String pacienteCodigo, ObraSocial obraSocial, Date fechaDeCarga, List<Estudio> estudios, Date fechaDeEntrega, String codigoSucursal) {
 		setCodigo(codigo);
-		setPaciente(paciente);
+		setPacienteCodigo(pacienteCodigo);
 		setObraSocial(obraSocial);
 		setFechaDeCarga(fechaDeCarga);
 		setEstudios(estudios);
@@ -31,11 +31,11 @@ public class Peticion {
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
 	}
-	public Paciente getPaciente() {
-		return paciente;
+	public String getPacienteCodigo() {
+		return pacienteCodigo;
 	}
-	public void setPaciente(Paciente paciente) {
-		this.paciente = paciente;
+	public void setPacienteCodigo(String paciente) {
+		this.pacienteCodigo = paciente;
 	}
 	public ObraSocial getObraSocial() {
 		return obraSocial;

@@ -1,5 +1,7 @@
 package entities;
 
+import enums.PracticaValoresTipo;
+
 public class Practica {
 	
 	private String codigo;
@@ -7,16 +9,18 @@ public class Practica {
 	private String grupo;
 	private int horasEsperaResultado;
 	private boolean habilitada;
+	private PracticaValoresTipo tipo;
 	private PracticaValores valoresNormales;
 	private PracticaValores valoresCriticos;
 	private PracticaValores valoresReservados;
 	
-	public Practica(String codigo, String nombre, String grupo, int horasEsperaResultado, boolean habilitada, PracticaValores valoresNormales, PracticaValores valoresCriticos, PracticaValores valoresReservados) {
+	public Practica(String codigo, String nombre, String grupo, int horasEsperaResultado, boolean habilitada, PracticaValoresTipo tipo, PracticaValores valoresNormales, PracticaValores valoresCriticos, PracticaValores valoresReservados) {
 		setCodigo(codigo);
 		setNombre(nombre);
 		setGrupo(grupo);
 		setHorasEsperaResultado(horasEsperaResultado);
 		setHabilitada(habilitada);
+		setTipo(tipo);
 		setValoresNormales(valoresNormales);
 		setValoresCriticos(valoresCriticos);
 		setValoresReservados(valoresReservados);
@@ -70,6 +74,14 @@ public class Practica {
 	}
 	public void setValoresReservados(PracticaValores valoresReservados) {
 		this.valoresReservados = valoresReservados;
+	}
+
+	public PracticaValoresTipo getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(PracticaValoresTipo tipo) {
+		this.tipo = tipo;
 	}
 	
 }

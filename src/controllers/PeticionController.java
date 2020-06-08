@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import Interfaces.Resultado;
+import dto.PeticionDTO;
 import entities.Estudio;
 import entities.Paciente;
 import entities.Peticion;
@@ -22,8 +23,14 @@ public enum PeticionController {
 	private int peticionesCreadas = 0;
 	private List<Peticion> peticiones = new ArrayList();
 	
-	public void createPeticion(Paciente paciente, ObraSocial obraSocial, Date fechaDeCarga, List<String> estudios, Date fechaDeEntrega, String codigoSucursal) {
-		Peticion newPeticion = new Peticion(generateCodigoPeticion(), paciente, obraSocial, fechaDeCarga, createEstudios(estudios), fechaDeEntrega, codigoSucursal);
+	public void createPeticion(PeticionDTO peticionDto) {
+		Peticion newPeticion = new Peticion(generateCodigoPeticion(), 
+											peticionDto.getPacienteCodigo(), 
+											peticionDto.getObraSocial(), 
+											peticionDto.getFechaDeCarga(),
+											createEstudios(peticionDto.getPracticaCodigos()), 
+											peticionDto.getFechaDeEntrega(), 
+											peticionDto.getCodigoSucursal());
 		peticiones.add(newPeticion);
 	}
 	
@@ -54,7 +61,7 @@ public enum PeticionController {
 	
 	public boolean hasPeticionesWithEstudiosTerminados(String codigoPaciente) {
 		return peticiones.stream()
-			.filter(p -> p.getPaciente().getCodigo().equals(codigoPaciente))
+			.filter(p -> p.getPacienteCodigo().equals(codigoPaciente))
 			.map(Peticion::getEstudios)
 			.flatMap(List::stream)
 			.filter(e -> e.getResultado() != null)

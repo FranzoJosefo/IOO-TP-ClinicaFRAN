@@ -4,9 +4,9 @@ public class Sucursal {
 	
 	private String codigo;
 	private Direccion direccion;
-	private Usuario responsable;
+	private String responsable;
 	
-	public Sucursal(String codigo, Direccion direccion, Usuario responsable) {
+	public Sucursal(String codigo, Direccion direccion, String responsable) {
 		setCodigo(codigo);
 		setDireccion(direccion);
 		setResponsable(responsable);
@@ -24,10 +24,10 @@ public class Sucursal {
 	public void setDireccion(Direccion direccion) {
 		this.direccion = direccion;
 	}
-	public Usuario getResponsable() {
+	public String getResponsable() {
 		return responsable;
 	}
-	public void setResponsable(Usuario responsable) {
+	public void setResponsable(String responsable) {
 		this.responsable = responsable;
 	}
 	

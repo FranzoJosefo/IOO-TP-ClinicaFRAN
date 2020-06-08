@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import dto.DireccionDTO;
 import dto.PacienteDTO;
 import entities.Direccion;
 import entities.Edad;
@@ -21,8 +22,15 @@ public enum PacienteController {
 	private int pacientesCreados = 0;
 	private List<Paciente> pacientes = new ArrayList();
 	
-	public void createPaciente(String codigo, String nombre, Long dni, Direccion direccion, String mail, Sexo sexo, Edad edad) {
-		Paciente newPaciente = new Paciente(generateCodigoPaciente(), nombre, dni, direccion, mail, sexo, edad);
+	public void createPaciente(PacienteDTO pacientDto) {
+		Direccion direccion = createDireccion(pacientDto.getDireccion());
+		Paciente newPaciente = new Paciente(generateCodigoPaciente(), 
+											pacientDto.getNombre(), 
+											pacientDto.getDni(), 
+											direccion, 
+											pacientDto.getMail(),
+											pacientDto.getSexo(),
+											pacientDto.getEdad());
 		pacientes.add(newPaciente);		
 	}
 	
@@ -38,6 +46,10 @@ public enum PacienteController {
 			throw new Exception("No se puede eliminar al paciente porque tiene estudios finalizados.");
 		}
 		pacientes.removeIf(p -> p.getCodigo().equals(codigoPaciente));
+	}
+	
+	public Direccion createDireccion(DireccionDTO direccionDto) {
+		return new Direccion(direccionDto.getCalle(), direccionDto.getNumero(), direccionDto.getLocalidad());
 	}
 	
 	private String generateCodigoPaciente() {

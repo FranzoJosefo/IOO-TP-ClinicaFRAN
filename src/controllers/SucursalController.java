@@ -3,6 +3,7 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import dto.DireccionDTO;
 import dto.SucursalDTO;
 import entities.Direccion;
 import entities.Sucursal;
@@ -17,10 +18,15 @@ public enum SucursalController {
 	private int sucursalesCreadas = 0;
 	private List<Sucursal> sucursales = new ArrayList();
 	
-	public void createSucursal(SucursalDTO sucursalDto) {
+	public void createSucursal(SucursalDTO sucursalDto) throws Exception {
 		checkResponsableExists(sucursalDto.getResponsableCodigo());
+		Direccion direccion = createDireccion(sucursalDto.getDireccion());
 		Sucursal newSucursal = new Sucursal(generateCodigoSucursal(), direccion, sucursalDto.getResponsableCodigo());
 		sucursales.add(newSucursal);
+	}
+	
+	public Direccion createDireccion(DireccionDTO direccionDto) {
+		return new Direccion(direccionDto.getCalle(), direccionDto.getNumero(), direccionDto.getLocalidad());
 	}
 	
 	public Sucursal getSucursal(String codigoSucursal) throws Exception {

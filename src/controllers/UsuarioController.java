@@ -1,14 +1,14 @@
 package controllers;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import dto.DireccionDTO;
+import dto.UsuarioDTO;
 import entities.Direccion;
 import entities.Usuario;
 import enums.PrefijoCodigo;
-import enums.UsuarioTipo;
 import utils.CodigoGenerator;
 
 public enum UsuarioController {
@@ -18,8 +18,18 @@ public enum UsuarioController {
 	private int usuariosCreados = 0;
 	private List<Usuario> usuarios = new ArrayList();
 	
-	public void createUsuario(String codigo, String nombreUsuario, String password, UsuarioTipo tipoUsuario, Date fechaNacimiento, String nombre, Long dni, Direccion direccion, String mail) {
-		Usuario newUsuario = new Usuario(generateCodigoUsuario(), nombreUsuario, password, tipoUsuario, fechaNacimiento, nombre, dni, direccion, mail);
+	public void createUsuario(UsuarioDTO usuarioDto) {
+		// tenemos que meter un check de que no exista el usuario por nombre o mail
+		Direccion direccion = createDireccion(usuarioDto.getDireccion());
+		Usuario newUsuario = new Usuario(generateCodigoUsuario(), 
+										 usuarioDto.getNombreUsuario(), 
+										 usuarioDto.getPassword(), 
+										 usuarioDto.getTipoUsuario(), 
+										 usuarioDto.getFechaNacimiento(), 
+										 usuarioDto.getNombre(), 
+										 usuarioDto.getDni(), 
+										 direccion, 
+										 usuarioDto.getMail());
 		usuarios.add(newUsuario);
 	}
 	
@@ -41,6 +51,10 @@ public enum UsuarioController {
 	
 	public void deleteUsuario(String codigoUsuario) {
 		usuarios.removeIf(u -> u.getCodigo().equals(codigoUsuario));
+	}
+	
+	public Direccion createDireccion(DireccionDTO direccionDto) {
+		return new Direccion(direccionDto.getCalle(), direccionDto.getNumero(), direccionDto.getLocalidad());
 	}
 	
 	private String generateCodigoUsuario() {

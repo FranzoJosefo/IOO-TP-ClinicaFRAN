@@ -1,6 +1,5 @@
 package dto;
 
-import entities.Direccion;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,7 +8,7 @@ import lombok.Data;
 public class SucursalDTO {
 
 	private String codigo;
-	private Direccion direccion;
+	private DireccionDTO direccion;
 	private String responsableCodigo;
 	
 }

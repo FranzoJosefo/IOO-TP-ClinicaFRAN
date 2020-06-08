@@ -3,9 +3,9 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import dto.PracticaDTO;
 import entities.Practica;
 import entities.PracticaValores;
-import enums.PracticaValoresTipo;
 import enums.PrefijoCodigo;
 import utils.CodigoGenerator;
 
@@ -16,27 +16,17 @@ public enum PracticaController {
 	private int practicasCreadas = 0;
 	private List<Practica> practicas = new ArrayList();
 	
-	public void createPractica(String codigo, 
-							   String nombre, 
-							   String grupo, 
-							   int horasEsperaResultado, 
-							   boolean habilitada, 
-							   PracticaValoresTipo practicaValoresTipo, 
-							   Object valorNormalMin, 
-							   Object valorNormalMax, 
-							   Object valorCriticoMin, 
-							   Object valorCriticoMax, 
-							   Object valorReservadoMin, 
-							   Object valorReservadoMax) {
+	public void createPractica(PracticaDTO practicaDto) {
 		
 		Practica newPractica = new Practica(generateCodigoPractica(), 
-											nombre, 
-											grupo, 
-											horasEsperaResultado, 
-											habilitada, 
-											new PracticaValores(valorNormalMin, valorNormalMax), 
-											new PracticaValores(valorCriticoMin, valorCriticoMax), 
-											new PracticaValores(valorReservadoMin, valorReservadoMax));
+											practicaDto.getNombre(), 
+											practicaDto.getGrupo(), 
+											practicaDto.getHorasEsperaResultado(), 
+											practicaDto.isHabilitada(), 
+											practicaDto.getTipo(),
+											new PracticaValores(practicaDto.getValorNormalMin(), practicaDto.getValorNormalMax()), 
+											new PracticaValores(practicaDto.getValorCriticoMin(), practicaDto.getValorCriticoMax()), 
+											new PracticaValores(practicaDto.getValorReservadoMin(), practicaDto.getValorReservadoMax()));
 		practicas.add(newPractica);
 	}
 	
