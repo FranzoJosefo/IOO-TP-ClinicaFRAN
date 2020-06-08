@@ -69,9 +69,9 @@ public enum PeticionController {
 			.isPresent();
 	}
 	
-	public boolean checkResultadoValido(Estudio estudio, Resultado resultado) {
+	public boolean checkResultadoValido(Optional<Estudio> estudio, Resultado resultado) throws Exception {
 		Practica practica = PracticaController.INSTANCE.getPractica(estudio.getPracticaCodigo());
-		
+		return false;
 	} 
 	
 	// TODO
