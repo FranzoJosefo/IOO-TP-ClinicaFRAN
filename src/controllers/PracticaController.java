@@ -5,7 +5,7 @@ import java.util.List;
 
 import dto.PracticaDTO;
 import entities.Practica;
-import entities.PracticaValores;
+import entities.PracticaValoresTest;
 import enums.PrefijoCodigo;
 import utils.CodigoGenerator;
 
@@ -24,9 +24,9 @@ public enum PracticaController {
 											practicaDto.getHorasEsperaResultado(), 
 											practicaDto.isHabilitada(), 
 											practicaDto.getTipo(),
-											new PracticaValores(practicaDto.getValorNormalMin(), practicaDto.getValorNormalMax()), 
-											new PracticaValores(practicaDto.getValorCriticoMin(), practicaDto.getValorCriticoMax()), 
-											new PracticaValores(practicaDto.getValorReservadoMin(), practicaDto.getValorReservadoMax()));
+											new PracticaValoresTest(practicaDto.getValorNormalMin(), practicaDto.getValorNormalMax()), 
+											new PracticaValoresTest(practicaDto.getValorCriticoMin(), practicaDto.getValorCriticoMax()), 
+											new PracticaValoresTest(practicaDto.getValorReservadoMin(), practicaDto.getValorReservadoMax()));
 		practicas.add(newPractica);
 	}
 	

@@ -1,5 +1,7 @@
 package entities;
 
+import Interfaces.PracticaValores;
+import dto.PracticaDTO;
 import enums.PracticaValoresTipo;
 
 public class Practica {
@@ -10,20 +12,17 @@ public class Practica {
 	private int horasEsperaResultado;
 	private boolean habilitada;
 	private PracticaValoresTipo tipo;
-	private PracticaValores valoresNormales;
-	private PracticaValores valoresCriticos;
-	private PracticaValores valoresReservados;
+	private PracticaValores valoresPosibles; 
 	
-	public Practica(String codigo, String nombre, String grupo, int horasEsperaResultado, boolean habilitada, PracticaValoresTipo tipo, PracticaValores valoresNormales, PracticaValores valoresCriticos, PracticaValores valoresReservados) {
-		setCodigo(codigo);
-		setNombre(nombre);
-		setGrupo(grupo);
-		setHorasEsperaResultado(horasEsperaResultado);
-		setHabilitada(habilitada);
-		setTipo(tipo);
-		setValoresNormales(valoresNormales);
-		setValoresCriticos(valoresCriticos);
-		setValoresReservados(valoresReservados);
+	public Practica(PracticaDTO practicaDto) {
+		this.codigo = practicaDto.getCodigo();
+		this.nombre = practicaDto.getNombre();
+		this.grupo = practicaDto.getGrupo();
+		this.horasEsperaResultado = practicaDto.getHorasEsperaResultado();
+		this.habilitada = practicaDto.isHabilitada();
+		this.tipo = practicaDto.getTipo();
+		
+
 	}
 	
 	public String getCodigo() {
@@ -57,31 +56,20 @@ public class Practica {
 	public void setHabilitada(boolean habilitada) {
 		this.habilitada = habilitada;
 	}
-	public PracticaValores getValoresNormales() {
-		return valoresNormales;
-	}
-	public void setValoresNormales(PracticaValores valoresNormales) {
-		this.valoresNormales = valoresNormales;
-	}
-	public PracticaValores getValoresCriticos() {
-		return valoresCriticos;
-	}
-	public void setValoresCriticos(PracticaValores valoresCriticos) {
-		this.valoresCriticos = valoresCriticos;
-	}
-	public PracticaValores getValoresReservados() {
-		return valoresReservados;
-	}
-	public void setValoresReservados(PracticaValores valoresReservados) {
-		this.valoresReservados = valoresReservados;
-	}
-
 	public PracticaValoresTipo getTipo() {
 		return tipo;
 	}
 
 	public void setTipo(PracticaValoresTipo tipo) {
 		this.tipo = tipo;
+	}
+
+	public PracticaValores getValoresPosibles() {
+		return valoresPosibles;
+	}
+
+	public void setValoresPosibles(PracticaValores valoresPosibles) {
+		this.valoresPosibles = valoresPosibles;
 	}
 	
 }

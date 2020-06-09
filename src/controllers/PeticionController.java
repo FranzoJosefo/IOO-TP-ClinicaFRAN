@@ -1,18 +1,13 @@
 package controllers;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import Interfaces.Resultado;
 import dto.PeticionDTO;
 import entities.Estudio;
-import entities.Paciente;
 import entities.Peticion;
-import entities.Practica;
-import enums.ObraSocial;
 import enums.PrefijoCodigo;
 import utils.CodigoGenerator;
 
@@ -41,17 +36,19 @@ public enum PeticionController {
 		.orElseThrow(() -> new Exception("No se ha encontrado la peticion"));
 	}
 	
-	public void cargarResultado(String codigoPeticion, String codigoPractica, Resultado resultado) throws Exception {
+	public void cargarResultado(String codigoPeticion, String codigoPractica, String resultado) throws Exception {
 		Optional<Estudio> estudio = getPeticion(codigoPeticion)
 				.getEstudios()
 				.stream()
 				.filter(e -> codigoPractica.equals(e.getPracticaCodigo()))
 				.findFirst();
 
-		if(estudio.isPresent() && checkResultadoValido(estudio, resultado)) {
-			estudio.get().setResultado(resultado);
+		if(!estudio.isPresent()) {
+			throw new Exception("No se ha encontrado el estudio asociado a dicha practica.");
+		} else if (!estudio.get().checkResultadoValido(resultado)) {
+			throw new Exception("Se ha cargado un resultado invalido.");
 		} else {
-			throw new Exception("No se ha encontrado el estudio asociado a dicha practica");
+			estudio.get().setResultado(resultado);
 		}
 	}
 	
@@ -67,16 +64,6 @@ public enum PeticionController {
 			.filter(e -> e.getResultado() != null)
 			.findFirst()
 			.isPresent();
-	}
-	
-	public boolean checkResultadoValido(Optional<Estudio> estudio, Resultado resultado) throws Exception {
-		Practica practica = PracticaController.INSTANCE.getPractica(estudio.getPracticaCodigo());
-		return false;
-	} 
-	
-	// TODO
-	private boolean isEstudioWithResultadosReservados(Estudio estudio) {
-		return true;
 	}
 	
 	public boolean hasEstudiosEnProceso(String codigoPractica) {
@@ -110,8 +97,8 @@ public enum PeticionController {
 	}
 	
 	
-	private List<Estudio> createEstudios(List<String> estudios) {
-		return estudios.stream()
+	private List<Estudio> createEstudios(List<String> codigosPracticas) {
+		return codigosPracticas.stream()
 		.filter(PracticaController.INSTANCE::isPracticaHabilitada)
 		.map(Estudio::new)
 		.collect(Collectors.toList());
