@@ -1,28 +1,29 @@
 package controllers;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import dto.DireccionDTO;
-import dto.PacienteDTO;
+import dtos.DireccionDTO;
+import dtos.PacienteDTO;
 import entities.Direccion;
-import entities.Edad;
 import entities.Paciente;
-import entities.Usuario;
 import enums.PrefijoCodigo;
-import enums.Sexo;
-import enums.UsuarioTipo;
 import utils.CodigoGenerator;
 
 public enum PacienteController {
 
 	INSTANCE;
 	
-	private int pacientesCreados = 0;
-	private List<Paciente> pacientes = new ArrayList();
+	private int pacientesCreados;
+	private List<Paciente> pacientes;
+	
+	PacienteController() {
+		pacientesCreados = 0;
+		pacientes = new ArrayList();
+	}
 	
 	public void createPaciente(PacienteDTO pacienteDto) {
+		pacienteDto.setCodigo(generateCodigoPaciente());
 		Paciente newPaciente = new Paciente(pacienteDto);
 		pacientes.add(newPaciente);		
 	}

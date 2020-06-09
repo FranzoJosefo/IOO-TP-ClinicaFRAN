@@ -1,25 +1,29 @@
 package entities;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import Interfaces.PracticaValores;
 
 public class PracticaValoresText implements PracticaValores {
 
-	Map<String, String> posiblesValores;
+	Map<String, String> valoresPosibles;
 	
-	PracticaValoresText() {
-		posiblesValores = new HashMap();
+	public PracticaValoresText(Map<String, String> valoresPosibles) {
+		this.valoresPosibles = valoresPosibles;
 	}
 	
 	@Override
 	public boolean isResultadoValido(String resultado) {
-		return posiblesValores.values()
+		return valoresPosibles.values()
 				.stream()
 				.filter(posibleValor -> posibleValor.equals(resultado))
 				.findFirst()
 				.isPresent();
+	}
+
+	@Override
+	public Map<String, String> toMap() {
+		return valoresPosibles;
 	}
 	
 }

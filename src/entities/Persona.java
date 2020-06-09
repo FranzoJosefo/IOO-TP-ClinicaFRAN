@@ -7,7 +7,6 @@ public abstract class Persona {
 	private Long dni;
 	private String mail;
 	
-	
 	public Persona(String nombre, Direccion direccion, Long dni, String mail) {
 		this.nombre = nombre;
 		this.direccion = direccion;

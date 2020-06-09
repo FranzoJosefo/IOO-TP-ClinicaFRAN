@@ -2,7 +2,7 @@ package entities;
 
 import java.util.Date;
 
-import dto.UsuarioDTO;
+import dtos.UsuarioDTO;
 import enums.UsuarioTipo;
 
 public class Usuario extends Persona {

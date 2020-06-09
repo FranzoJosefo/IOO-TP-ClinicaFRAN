@@ -3,9 +3,8 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import dto.PracticaDTO;
+import dtos.PracticaDTO;
 import entities.Practica;
-import entities.PracticaValoresTest;
 import enums.PrefijoCodigo;
 import utils.CodigoGenerator;
 
@@ -13,10 +12,16 @@ public enum PracticaController {
 
 	INSTANCE;
 	
-	private int practicasCreadas = 0;
-	private List<Practica> practicas = new ArrayList();
+	private int practicasCreadas;
+	private List<Practica> practicas;
+	
+	PracticaController() {
+		practicasCreadas = 0;
+		practicas = new ArrayList();
+	}
 	
 	public void createPractica(PracticaDTO practicaDto) {
+		practicaDto.setCodigo(generateCodigoPractica());
 		Practica newPractica = new Practica(practicaDto);
 		practicas.add(newPractica);
 	}

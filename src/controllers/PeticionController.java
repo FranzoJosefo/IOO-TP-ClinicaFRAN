@@ -3,12 +3,10 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import dto.PeticionDTO;
+import dtos.PeticionDTO;
 import entities.Estudio;
 import entities.Peticion;
-import entities.Practica;
 import enums.PrefijoCodigo;
 import utils.CodigoGenerator;
 
@@ -16,10 +14,16 @@ public enum PeticionController {
 	
 	INSTANCE;
 	
-	private int peticionesCreadas = 0;
-	private List<Peticion> peticiones = new ArrayList();
+	private int peticionesCreadas;
+	private List<Peticion> peticiones;
+	
+	PeticionController() {
+		peticionesCreadas = 0;
+		peticiones = new ArrayList();
+	}
 	
 	public void createPeticion(PeticionDTO peticionDto) {
+		peticionDto.setCodigo(generateCodigoPeticion());
 		Peticion newPeticion = new Peticion(peticionDto);
 		peticiones.add(newPeticion);
 	}
@@ -61,17 +65,6 @@ public enum PeticionController {
 			.isPresent();
 	}
 	
-
-	public boolean checkResultadoValido(Optional<Estudio> estudio, Resultado resultado) throws Exception {
-		Practica practica = PracticaController.INSTANCE.getPractica(estudio.get().getPracticaCodigo());
-		return false;
-	} 
-	
-	// TODO
-	private boolean isEstudioWithResultadosReservados(Estudio estudio) {
-		return true;
-	}
-	
 	public boolean hasEstudiosEnProceso(String codigoPractica) {
 		return peticiones.stream()
 			.map(Peticion::getEstudios)
@@ -100,14 +93,6 @@ public enum PeticionController {
 	// se pide listar todas las peticiones con valores criticos
 	public void getAllPeticiones() {
 		
-	}
-	
-	
-	private List<Estudio> createEstudios(List<String> codigosPracticas) {
-		return codigosPracticas.stream()
-		.filter(PracticaController.INSTANCE::isPracticaHabilitada)
-		.map(Estudio::new)
-		.collect(Collectors.toList());
 	}
 	
 	private String generateCodigoPeticion() {

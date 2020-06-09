@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import dto.DireccionDTO;
-import dto.UsuarioDTO;
+import dtos.DireccionDTO;
+import dtos.UsuarioDTO;
 import entities.Direccion;
 import entities.Usuario;
 import enums.PrefijoCodigo;
@@ -15,11 +15,18 @@ public enum UsuarioController {
 
 	INSTANCE;
 	
-	private int usuariosCreados = 0;
-	private List<Usuario> usuarios = new ArrayList();
+	private int usuariosCreados;
+	private List<Usuario> usuarios;
+	
+	UsuarioController() {
+		usuariosCreados = 0;
+		usuarios = new ArrayList();
+	}
 	
 	public void createUsuario(UsuarioDTO usuarioDto) {
+		
 		// tenemos que meter un check de que no exista el usuario por nombre o mail
+		usuarioDto.setCodigo(generateCodigoUsuario());
 		Usuario newUsuario = new Usuario(usuarioDto);
 		usuarios.add(newUsuario);
 	}

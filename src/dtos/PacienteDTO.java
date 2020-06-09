@@ -1,4 +1,4 @@
-package dto;
+package dtos;
 
 import entities.Edad;
 import enums.Sexo;

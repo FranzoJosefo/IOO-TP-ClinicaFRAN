@@ -1,11 +1,10 @@
-package entities;
+package dtos;
 
-import Interfaces.PracticaValores;
-import dtos.PracticaDTO;
+import java.util.Map;
+
 import enums.PracticaValoresTipo;
-import factories.PracticaValoresFactory;
 
-public class Practica {
+public class PracticaDTO {
 
 	private String codigo;
 	private String nombre;
@@ -13,16 +12,17 @@ public class Practica {
 	private int horasEsperaResultado;
 	private boolean habilitada;
 	private PracticaValoresTipo tipo;
-	private PracticaValores valoresPosibles; 
+	private Map<String, String> valoresPosibles;
 
-	public Practica(PracticaDTO practicaDto) {
-		this.codigo = practicaDto.getCodigo();
-		this.nombre = practicaDto.getNombre();
-		this.grupo = practicaDto.getGrupo();
-		this.horasEsperaResultado = practicaDto.getHorasEsperaResultado();
-		this.habilitada = practicaDto.isHabilitada();
-		this.tipo = practicaDto.getTipo();
-		this.valoresPosibles = PracticaValoresFactory.createPracticaValores(practicaDto.getTipo(), practicaDto.getValoresPosibles());
+	public PracticaDTO(String codigo, String nombre, String grupo, int horasEsperaResultado, boolean habilitada,
+			PracticaValoresTipo tipo, Map<String, String> valoresPosibles) {
+		this.codigo = codigo;
+		this.nombre = nombre;
+		this.grupo = grupo;
+		this.horasEsperaResultado = horasEsperaResultado;
+		this.habilitada = habilitada;
+		this.tipo = tipo;
+		this.valoresPosibles = valoresPosibles;
 	}
 
 	public String getCodigo() {
@@ -73,15 +73,12 @@ public class Practica {
 		this.tipo = tipo;
 	}
 
-	public PracticaValores getValoresPosibles() {
+	public Map<String, String> getValoresPosibles() {
 		return valoresPosibles;
 	}
 
-	public void setValoresPosibles(PracticaValores valoresPosibles) {
+	public void setValoresPosibles(Map<String, String> valoresPosibles) {
 		this.valoresPosibles = valoresPosibles;
 	}
-	
-	public PracticaDTO toDto() {
-		return new PracticaDTO(codigo, nombre, grupo, horasEsperaResultado, habilitada, tipo, valoresPosibles.toMap());
-	}
+
 }

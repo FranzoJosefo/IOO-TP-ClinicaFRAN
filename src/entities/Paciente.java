@@ -1,6 +1,6 @@
 package entities;
 
-import dto.PacienteDTO;
+import dtos.PacienteDTO;
 import enums.Sexo;
 
 public class Paciente extends Persona {

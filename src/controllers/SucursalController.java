@@ -3,11 +3,8 @@ package controllers;
 import java.util.ArrayList;
 import java.util.List;
 
-import dto.DireccionDTO;
-import dto.SucursalDTO;
-import entities.Direccion;
+import dtos.SucursalDTO;
 import entities.Sucursal;
-import entities.Usuario;
 import enums.PrefijoCodigo;
 import utils.CodigoGenerator;
 
@@ -15,8 +12,13 @@ public enum SucursalController {
 
 	INSTANCE;
 	
-	private int sucursalesCreadas = 0;
-	private List<Sucursal> sucursales = new ArrayList();
+	private int sucursalesCreadas;
+	private List<Sucursal> sucursales;
+	
+	SucursalController() {
+		sucursalesCreadas = 0;
+		sucursales = new ArrayList();
+	}
 	
 	public void createSucursal(SucursalDTO sucursalDto) throws Exception {
 		checkResponsableExists(sucursalDto.getResponsableCodigo());

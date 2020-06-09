@@ -1,6 +1,6 @@
 package entities;
 
-import dto.SucursalDTO;
+import dtos.SucursalDTO;
 
 public class Sucursal {
 

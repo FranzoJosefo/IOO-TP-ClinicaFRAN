@@ -1,6 +1,6 @@
 package entities;
 
-import dto.DireccionDTO;
+import dtos.DireccionDTO;
 
 public class Direccion {
 

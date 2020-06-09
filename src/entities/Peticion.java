@@ -3,8 +3,10 @@ package entities;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import dto.PeticionDTO;
+import controllers.PracticaController;
+import dtos.PeticionDTO;
 import enums.ObraSocial;
 
 public class Peticion {
@@ -22,9 +24,17 @@ public class Peticion {
 		this.pacienteCodigo = peticionDto.getPacienteCodigo();
 		this.obraSocial = peticionDto.getObraSocial();
 		this.fechaDeCarga = peticionDto.getFechaDeCarga();
-		//this.estudios = peticionDto.getEstudios();
+		this.estudios = createEstudios(peticionDto.getPracticaCodigos());
 		this.fechaDeEntrega = peticionDto.getFechaDeEntrega();
 		this.codigoSucursal = peticionDto.getCodigoSucursal();
+	}
+	
+	// Ver que pasa si alguna practica no existe o está deshabilitada, si se lo informamos al usuario
+	private List<Estudio> createEstudios(List<String> codigosPracticas) {
+		return codigosPracticas.stream()
+		.filter(PracticaController.INSTANCE::isPracticaHabilitada)
+		.map(Estudio::new)
+		.collect(Collectors.toList());
 	}
 	
 	public String getCodigo() {
