@@ -15,7 +15,6 @@ public class PacienteDTO {
 
 	public PacienteDTO(String codigo, Sexo sexo, Edad edad, String nombre, DireccionDTO direccion, Long dni,
 			String mail) {
-		super();
 		this.codigo = codigo;
 		this.sexo = sexo;
 		this.edad = edad;

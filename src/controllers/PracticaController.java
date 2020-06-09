@@ -17,16 +17,7 @@ public enum PracticaController {
 	private List<Practica> practicas = new ArrayList();
 	
 	public void createPractica(PracticaDTO practicaDto) {
-		
-		Practica newPractica = new Practica(generateCodigoPractica(), 
-											practicaDto.getNombre(), 
-											practicaDto.getGrupo(), 
-											practicaDto.getHorasEsperaResultado(), 
-											practicaDto.isHabilitada(), 
-											practicaDto.getTipo(),
-											new PracticaValoresTest(practicaDto.getValorNormalMin(), practicaDto.getValorNormalMax()), 
-											new PracticaValoresTest(practicaDto.getValorCriticoMin(), practicaDto.getValorCriticoMax()), 
-											new PracticaValoresTest(practicaDto.getValorReservadoMin(), practicaDto.getValorReservadoMax()));
+		Practica newPractica = new Practica(practicaDto);
 		practicas.add(newPractica);
 	}
 	

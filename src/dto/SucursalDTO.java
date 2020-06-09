@@ -7,7 +7,6 @@ public class SucursalDTO {
 	private String responsableCodigo;
 
 	public SucursalDTO(String codigo, DireccionDTO direccion, String responsableCodigo) {
-		super();
 		this.codigo = codigo;
 		this.direccion = direccion;
 		this.responsableCodigo = responsableCodigo;

@@ -18,7 +18,6 @@ public class UsuarioDTO {
 
 	public UsuarioDTO(String codigo, String nombreUsuario, String password, UsuarioTipo tipoUsuario,
 			Date fechaNacimiento, String nombre, DireccionDTO direccion, Long dni, String mail) {
-		super();
 		this.codigo = codigo;
 		this.nombreUsuario = nombreUsuario;
 		this.password = password;

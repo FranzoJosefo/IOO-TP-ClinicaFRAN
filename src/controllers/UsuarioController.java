@@ -20,16 +20,7 @@ public enum UsuarioController {
 	
 	public void createUsuario(UsuarioDTO usuarioDto) {
 		// tenemos que meter un check de que no exista el usuario por nombre o mail
-		Direccion direccion = createDireccion(usuarioDto.getDireccion());
-		Usuario newUsuario = new Usuario(generateCodigoUsuario(), 
-										 usuarioDto.getNombreUsuario(), 
-										 usuarioDto.getPassword(), 
-										 usuarioDto.getTipoUsuario(), 
-										 usuarioDto.getFechaNacimiento(), 
-										 usuarioDto.getNombre(), 
-										 usuarioDto.getDni(), 
-										 direccion, 
-										 usuarioDto.getMail());
+		Usuario newUsuario = new Usuario(usuarioDto);
 		usuarios.add(newUsuario);
 	}
 	
@@ -54,7 +45,7 @@ public enum UsuarioController {
 	}
 	
 	public Direccion createDireccion(DireccionDTO direccionDto) {
-		return new Direccion(direccionDto.getCalle(), direccionDto.getNumero(), direccionDto.getLocalidad());
+		return new Direccion(direccionDto);
 	}
 	
 	private String generateCodigoUsuario() {

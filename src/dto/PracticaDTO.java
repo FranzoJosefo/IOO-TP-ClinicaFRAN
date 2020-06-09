@@ -20,7 +20,6 @@ public class PracticaDTO {
 	public PracticaDTO(String codigo, String nombre, String grupo, int horasEsperaResultado, boolean habilitada,
 			PracticaValoresTipo tipo, String valorNormalMin, String valorNormalMax, String valorCriticoMin,
 			String valorCriticoMax, String valorReservadoMin, String valorReservadoMax) {
-		super();
 		this.codigo = codigo;
 		this.nombre = nombre;
 		this.grupo = grupo;

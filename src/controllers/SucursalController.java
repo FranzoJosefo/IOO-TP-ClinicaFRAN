@@ -20,9 +20,8 @@ public enum SucursalController {
 	
 	public void createSucursal(SucursalDTO sucursalDto) throws Exception {
 		checkResponsableExists(sucursalDto.getResponsableCodigo());
-		DireccionDTO direccionDTO = sucursalDto.getDireccion();
-		Direccion direccion = new Direccion(direccionDTO.getCalle(), direccionDTO.getNumero(), direccionDTO.getLocalidad());
-		Sucursal newSucursal = new Sucursal(generateCodigoSucursal(), direccion, sucursalDto.getResponsableCodigo());
+		sucursalDto.setCodigo(generateCodigoSucursal());
+		Sucursal newSucursal = new Sucursal(sucursalDto);
 		sucursales.add(newSucursal);
 	}
 	

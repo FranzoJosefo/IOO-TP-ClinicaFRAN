@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import dto.PeticionDTO;
 import entities.Estudio;
 import entities.Peticion;
+import entities.Practica;
 import enums.PrefijoCodigo;
 import utils.CodigoGenerator;
 
@@ -19,13 +20,7 @@ public enum PeticionController {
 	private List<Peticion> peticiones = new ArrayList();
 	
 	public void createPeticion(PeticionDTO peticionDto) {
-		Peticion newPeticion = new Peticion(generateCodigoPeticion(), 
-											peticionDto.getPacienteCodigo(), 
-											peticionDto.getObraSocial(), 
-											peticionDto.getFechaDeCarga(),
-											createEstudios(peticionDto.getPracticaCodigos()), 
-											peticionDto.getFechaDeEntrega(), 
-											peticionDto.getCodigoSucursal());
+		Peticion newPeticion = new Peticion(peticionDto);
 		peticiones.add(newPeticion);
 	}
 	
@@ -64,6 +59,17 @@ public enum PeticionController {
 			.filter(e -> e.getResultado() != null)
 			.findFirst()
 			.isPresent();
+	}
+	
+
+	public boolean checkResultadoValido(Optional<Estudio> estudio, Resultado resultado) throws Exception {
+		Practica practica = PracticaController.INSTANCE.getPractica(estudio.get().getPracticaCodigo());
+		return false;
+	} 
+	
+	// TODO
+	private boolean isEstudioWithResultadosReservados(Estudio estudio) {
+		return true;
 	}
 	
 	public boolean hasEstudiosEnProceso(String codigoPractica) {

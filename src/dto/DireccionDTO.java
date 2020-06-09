@@ -7,7 +7,6 @@ public class DireccionDTO {
 	private String localidad;
 
 	public DireccionDTO(String calle, int numero, String localidad) {
-		super();
 		this.calle = calle;
 		this.numero = numero;
 		this.localidad = localidad;

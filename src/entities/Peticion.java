@@ -1,8 +1,10 @@
+
 package entities;
 
 import java.util.Date;
 import java.util.List;
 
+import dto.PeticionDTO;
 import enums.ObraSocial;
 
 public class Peticion {
@@ -15,14 +17,14 @@ public class Peticion {
 	private Date fechaDeEntrega;
 	private String codigoSucursal;
 	
-	public Peticion(String codigo, String pacienteCodigo, ObraSocial obraSocial, Date fechaDeCarga, List<Estudio> estudios, Date fechaDeEntrega, String codigoSucursal) {
-		setCodigo(codigo);
-		setPacienteCodigo(pacienteCodigo);
-		setObraSocial(obraSocial);
-		setFechaDeCarga(fechaDeCarga);
-		setEstudios(estudios);
-		setFechaDeEntrega(fechaDeEntrega);
-		setCodigoSucursal(codigoSucursal);
+	public Peticion(PeticionDTO peticionDto) {
+		this.codigo = peticionDto.getCodigo();
+		this.pacienteCodigo = peticionDto.getPacienteCodigo();
+		this.obraSocial = peticionDto.getObraSocial();
+		this.fechaDeCarga = peticionDto.getFechaDeCarga();
+		//this.estudios = peticionDto.getEstudios();
+		this.fechaDeEntrega = peticionDto.getFechaDeEntrega();
+		this.codigoSucursal = peticionDto.getCodigoSucursal();
 	}
 	
 	public String getCodigo() {

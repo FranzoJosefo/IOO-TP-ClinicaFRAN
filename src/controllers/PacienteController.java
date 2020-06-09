@@ -22,15 +22,8 @@ public enum PacienteController {
 	private int pacientesCreados = 0;
 	private List<Paciente> pacientes = new ArrayList();
 	
-	public void createPaciente(PacienteDTO pacientDto) {
-		Direccion direccion = createDireccion(pacientDto.getDireccion());
-		Paciente newPaciente = new Paciente(generateCodigoPaciente(), 
-											pacientDto.getNombre(), 
-											pacientDto.getDni(), 
-											direccion, 
-											pacientDto.getMail(),
-											pacientDto.getSexo(),
-											pacientDto.getEdad());
+	public void createPaciente(PacienteDTO pacienteDto) {
+		Paciente newPaciente = new Paciente(pacienteDto);
 		pacientes.add(newPaciente);		
 	}
 	
@@ -49,7 +42,7 @@ public enum PacienteController {
 	}
 	
 	public Direccion createDireccion(DireccionDTO direccionDto) {
-		return new Direccion(direccionDto.getCalle(), direccionDto.getNumero(), direccionDto.getLocalidad());
+		return new Direccion(direccionDto);
 	}
 	
 	private String generateCodigoPaciente() {

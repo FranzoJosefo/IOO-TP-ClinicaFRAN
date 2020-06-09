@@ -1,15 +1,17 @@
 package entities;
 
+import dto.DireccionDTO;
+
 public class Direccion {
 
 	private String calle;
 	private int numero;
 	private String localidad;
 	
-	public Direccion(String calle, int numero, String localidad) {
-		this.calle = calle;
-		this.numero = numero;
-		this.localidad = localidad;
+	public Direccion(DireccionDTO direccionDTO) {
+		this.calle = direccionDTO.getCalle();
+		this.numero = direccionDTO.getNumero();
+		this.localidad = direccionDTO.getLocalidad();
 	}
 
 	public String getCalle() {
@@ -29,6 +31,9 @@ public class Direccion {
 	}
 	public void setLocalidad(String localidad) {
 		this.localidad = localidad;
+	}
+	public DireccionDTO toDTO() {
+		return new DireccionDTO(this.calle, this.numero, this.localidad);
 	}
 	
 }

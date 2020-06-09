@@ -17,7 +17,6 @@ public class PeticionDTO {
 
 	public PeticionDTO(String codigo, String pacienteCodigo, ObraSocial obraSocial, Date fechaDeCarga,
 			List<String> practicaCodigos, Date fechaDeEntrega, String codigoSucursal) {
-		super();
 		this.codigo = codigo;
 		this.pacienteCodigo = pacienteCodigo;
 		this.obraSocial = obraSocial;
