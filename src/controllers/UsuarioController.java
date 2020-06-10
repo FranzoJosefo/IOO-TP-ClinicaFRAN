@@ -13,6 +13,7 @@ import entities.Direccion;
 import entities.Usuario;
 import enums.DataFilesNames;
 import enums.PrefijoCodigo;
+import mocks.EntitiesMocks;
 import utils.CodigoGenerator;
 
 public enum UsuarioController {
@@ -24,6 +25,7 @@ public enum UsuarioController {
 	
 	UsuarioController() {
 		usuariosCreados = 0;
+		ApiService.grabar(EntitiesMocks.getUsuariosMock(), DataFilesNames.FILE_USUARIOS.getName());
 		usuarios = fetchUsuariosPersistidos();
 	}
 	
@@ -69,7 +71,7 @@ public enum UsuarioController {
 	
 	private void checkNotExistsUsername(CredentialsDTO credentialsDto) throws Exception {
 		if(existsUsername(credentialsDto)) {
-			throw new Exception("El nombre de usuario ya está en uso.");
+			throw new Exception("El nombre de usuario ya estï¿½ en uso.");
 		}
 	}
 	

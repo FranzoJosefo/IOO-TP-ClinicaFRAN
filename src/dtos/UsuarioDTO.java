@@ -22,6 +22,7 @@ public class UsuarioDTO {
 		this.credentials = credentialsDto;
 		this.tipoUsuario = tipoUsuario;
 		this.fechaNacimiento = fechaNacimiento;
+		this.apellido = apellido;
 		this.nombre = nombre;
 		this.direccion = direccion;
 		this.dni = dni;
