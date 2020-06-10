@@ -33,26 +33,20 @@ public enum PacienteController {
 
 	private List<Paciente> fetchPacientesPersistidos() {
 		List<PacienteDTO> dtos = ApiService.leer(PacienteDTO.class, DataFilesNames.FILE_PACIENTES.getName());
-		return dtos.stream()
-				.map(Paciente::new)
-				.collect(Collectors.toList());				
+		return dtos.stream().map(Paciente::new).collect(Collectors.toList());
 	}
 
 	private void updatePacientesPersistidos() {
 		ApiService.grabar(getPacientesDTO(), DataFilesNames.FILE_PACIENTES.getName());
 	}
 
-	public Paciente getPaciente(String codigoPaciente) throws Exception {
-		return pacientes.stream()
-				.filter(p -> p.getCodigo().equals(codigoPaciente))
-				.findFirst()
-				.orElseThrow(() -> new Exception("No se ha encontrado el paciente"));
-	}
-	
 	public List<PacienteDTO> getPacientesDTO() {
-		return pacientes.stream()
-				.map(Paciente::toDto)
-				.collect(Collectors.toList());
+		return pacientes.stream().map(Paciente::toDto).collect(Collectors.toList());
+	}
+
+	public Paciente getPaciente(String codigoPaciente) throws Exception {
+		return pacientes.stream().filter(p -> p.getCodigo().equals(codigoPaciente)).findFirst()
+				.orElseThrow(() -> new Exception("No se ha encontrado el paciente"));
 	}
 
 	public void deletePaciente(String codigoPaciente) throws Exception {

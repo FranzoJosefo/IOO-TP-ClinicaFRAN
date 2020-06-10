@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import data.ApiService;
 import dtos.DireccionDTO;
 import dtos.UsuarioDTO;
+import entities.Credentials;
 import entities.Direccion;
 import entities.Usuario;
 import enums.DataFilesNames;
@@ -56,14 +57,25 @@ public enum UsuarioController {
 				.orElseThrow(() -> new Exception("No se ha encontrado el usuario"));
 	}
 	
+	public Usuario getUsuarioByCredentials(Credentials credentials) throws Exception {
+		return findUsuarioByCredentials(credentials)
+				.orElseThrow(() -> new Exception("No se ha encontrado el usuario"));
+	}
+	
 	public boolean existsUsuario(String codigoUsuario) {
 		return findUsuario(codigoUsuario)
 				.isPresent();
 	}
 	
-	public Optional<Usuario> findUsuario(String codigoUsuario) {
+	private Optional<Usuario> findUsuario(String codigoUsuario) {
 		return usuarios.stream()
 				.filter(u -> u.getCodigo().equals(codigoUsuario))
+				.findFirst();
+	}
+	
+	public Optional<Usuario> findUsuarioByCredentials(Credentials credential) {
+		return usuarios.stream()
+				.filter(u -> u.getCredentials().equals(credential))
 				.findFirst();
 	}
 	

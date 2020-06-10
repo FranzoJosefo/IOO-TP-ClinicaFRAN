@@ -8,8 +8,7 @@ import enums.UsuarioTipo;
 public class Usuario extends Persona {
 
 	private String codigo;
-	private String nombreUsuario;
-	private String password;
+	private Credentials credentials;
 	private UsuarioTipo tipoUsuario;
 	private Date fechaNacimiento;
 
@@ -17,8 +16,7 @@ public class Usuario extends Persona {
 		super(usuarioDto.getNombre(), new Direccion(usuarioDto.getDireccion()), usuarioDto.getDni(),
 				usuarioDto.getMail());
 		this.codigo = usuarioDto.getCodigo();
-		this.nombreUsuario = usuarioDto.getNombreUsuario();
-		this.password = usuarioDto.getPassword();
+		this.credentials = new Credentials(usuarioDto.getCredentialsDto());
 		this.tipoUsuario = usuarioDto.getTipoUsuario();
 		this.fechaNacimiento = usuarioDto.getFechaNacimiento();
 	}
@@ -31,20 +29,8 @@ public class Usuario extends Persona {
 		this.codigo = codigo;
 	}
 
-	public String getNombreUsuario() {
-		return nombreUsuario;
-	}
-
-	public void setNombreUsuario(String nombreUsuario) {
-		this.nombreUsuario = nombreUsuario;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
+	public Credentials getCredentials() {
+		return this.credentials;
 	}
 
 	public Date getFechaNacimiento() {
@@ -64,7 +50,7 @@ public class Usuario extends Persona {
 	}
 
 	public UsuarioDTO toDTO() {
-		return new UsuarioDTO(codigo, nombreUsuario, password, tipoUsuario, fechaNacimiento, this.getNombre(),
+		return new UsuarioDTO(codigo, credentials.toDTO(), tipoUsuario, fechaNacimiento, this.getNombre(),
 				this.getDireccion().toDTO(), this.getDni(), this.getMail());
 	}
 }

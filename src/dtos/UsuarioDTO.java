@@ -7,8 +7,7 @@ import enums.UsuarioTipo;
 public class UsuarioDTO {
 
 	private String codigo;
-	private String nombreUsuario;
-	private String password;
+	private CredentialsDTO credentials;
 	private UsuarioTipo tipoUsuario;
 	private Date fechaNacimiento;
 	private String nombre;
@@ -16,11 +15,10 @@ public class UsuarioDTO {
 	private Long dni;
 	private String mail;
 
-	public UsuarioDTO(String codigo, String nombreUsuario, String password, UsuarioTipo tipoUsuario,
+	public UsuarioDTO(String codigo, CredentialsDTO credentialsDto, UsuarioTipo tipoUsuario,
 			Date fechaNacimiento, String nombre, DireccionDTO direccion, Long dni, String mail) {
 		this.codigo = codigo;
-		this.nombreUsuario = nombreUsuario;
-		this.password = password;
+		this.credentials = credentialsDto;
 		this.tipoUsuario = tipoUsuario;
 		this.fechaNacimiento = fechaNacimiento;
 		this.nombre = nombre;
@@ -37,20 +35,8 @@ public class UsuarioDTO {
 		this.codigo = codigo;
 	}
 
-	public String getNombreUsuario() {
-		return nombreUsuario;
-	}
-
-	public void setNombreUsuario(String nombreUsuario) {
-		this.nombreUsuario = nombreUsuario;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
+	public CredentialsDTO getCredentialsDto() {
+		return this.credentials;
 	}
 
 	public UsuarioTipo getTipoUsuario() {
