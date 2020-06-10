@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import data.ApiService;
+import dtos.CredentialsDTO;
 import dtos.DireccionDTO;
 import dtos.UsuarioDTO;
 import entities.Credentials;
@@ -26,9 +27,8 @@ public enum UsuarioController {
 		usuarios = fetchUsuariosPersistidos();
 	}
 	
-	public void createUsuario(UsuarioDTO usuarioDto) {
-		
-		// tenemos que meter un check de que no exista el usuario por nombre o mail
+	public void createUsuario(UsuarioDTO usuarioDto) throws Exception {
+		checkNotExistsUsername(usuarioDto.getCredentialsDto());
 		usuarioDto.setCodigo(generateCodigoUsuario());
 		Usuario newUsuario = new Usuario(usuarioDto);
 		usuarios.add(newUsuario);
@@ -65,6 +65,19 @@ public enum UsuarioController {
 	public boolean existsUsuario(String codigoUsuario) {
 		return findUsuario(codigoUsuario)
 				.isPresent();
+	}
+	
+	private void checkNotExistsUsername(CredentialsDTO credentialsDto) throws Exception {
+		if(existsUsername(credentialsDto)) {
+			throw new Exception("El nombre de usuario ya está en uso.");
+		}
+	}
+	
+	private boolean existsUsername(CredentialsDTO credentialsDto) {
+		return usuarios.stream()
+				.map(Usuario::getCredentials)
+				.map(Credentials::getUsername)
+				.anyMatch(userName -> userName.equals(credentialsDto.getUsername()));
 	}
 	
 	private Optional<Usuario> findUsuario(String codigoUsuario) {
