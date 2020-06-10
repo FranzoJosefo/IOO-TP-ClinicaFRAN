@@ -10,6 +10,7 @@ import entities.Direccion;
 import entities.Paciente;
 import enums.DataFilesNames;
 import enums.PrefijoCodigo;
+import mocks.EntitiesMocks;
 import utils.CodigoGenerator;
 
 public enum PacienteController {
@@ -21,6 +22,7 @@ public enum PacienteController {
 
 	PacienteController() {
 		pacientesCreados = 0;
+		ApiService.grabar(EntitiesMocks.getPacientesMock(), DataFilesNames.FILE_PACIENTES.getName());
 		pacientes = fetchPacientesPersistidos();
 	}
 
