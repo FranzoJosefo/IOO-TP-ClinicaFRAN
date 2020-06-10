@@ -1,6 +1,5 @@
 package vistas.login;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -10,21 +9,16 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
 
 import controllers.LoginController;
 import controllers.OnLoginCallback;
 import dtos.CredentialsDTO;
+import enums.UsuarioTipo;
 
 import java.awt.Color;
 import javax.swing.JPasswordField;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SwingConstants;
 
 public class LoginView extends JFrame {
 
@@ -72,10 +66,9 @@ public class LoginView extends JFrame {
 						new OnLoginCallback() {
 
 							@Override
-							public void onLoginSuccess() {
+							public void onLoginSuccess(UsuarioTipo usuarioTipo) {
 								setVisible(false);
-//								TuVieja tuvieja = new TuVieja();
-//								tuvieja.setVisible(true);
+//								
 							}
 
 							@Override
@@ -115,4 +108,5 @@ public class LoginView extends JFrame {
 								.addGap(27).addComponent(btnLogin).addGap(66)));
 		contentPane.setLayout(gl_contentPane);
 	}
+	
 }

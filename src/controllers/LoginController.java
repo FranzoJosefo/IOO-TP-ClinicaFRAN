@@ -15,7 +15,7 @@ public enum LoginController {
 		Credentials credentials = new Credentials(credentialsDto);
 		try {
 			currentUser = UsuarioController.INSTANCE.getUsuarioByCredentials(credentials);
-			callback.onLoginSuccess();
+			callback.onLoginSuccess(currentUser.getTipoUsuario());
 		} catch (Exception e) {
 			callback.onLoginFailure();
 			e.printStackTrace();
