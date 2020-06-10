@@ -7,10 +7,10 @@ public class Paciente extends Persona {
 
 	private String codigo;
 	private Sexo sexo;
-	private Edad edad;
+	private Long edad;
 
 	public Paciente(PacienteDTO pacienteDto) {
-		super(pacienteDto.getNombre(), new Direccion(pacienteDto.getDireccion()), pacienteDto.getDni(),
+		super(pacienteDto.getApellido(), pacienteDto.getNombre(), new Direccion(pacienteDto.getDireccion()), pacienteDto.getDni(),
 				pacienteDto.getMail());
 		this.codigo = pacienteDto.getCodigo();
 		this.sexo = pacienteDto.getSexo();
@@ -33,16 +33,16 @@ public class Paciente extends Persona {
 		this.sexo = sexo;
 	}
 
-	public Edad getEdad() {
+	public Long getEdad() {
 		return edad;
 	}
 
-	public void setEdad(Edad edad) {
+	public void setEdad(Long edad) {
 		this.edad = edad;
 	}
 
 	public PacienteDTO toDto() {
-		return new PacienteDTO(this.codigo, this.sexo, this.edad, this.getNombre(), this.getDireccion().toDTO(),
+		return new PacienteDTO(this.codigo, this.sexo, this.edad, this.getApellido(), this.getNombre(), this.getDireccion().toDTO(),
 				this.getDni(), this.getMail());
 	}
 

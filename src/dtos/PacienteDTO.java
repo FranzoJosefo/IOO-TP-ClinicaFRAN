@@ -1,23 +1,24 @@
 package dtos;
 
-import entities.Edad;
 import enums.Sexo;
 
 public class PacienteDTO {
 
 	private String codigo;
 	private Sexo sexo;
-	private Edad edad;
+	private Long edad;
 	private String nombre;
+	private String apellido;
 	private DireccionDTO direccion;
 	private Long dni;
 	private String mail;
 
-	public PacienteDTO(String codigo, Sexo sexo, Edad edad, String nombre, DireccionDTO direccion, Long dni,
+	public PacienteDTO(String codigo, Sexo sexo, Long edad, String apellido, String nombre, DireccionDTO direccion, Long dni,
 			String mail) {
 		this.codigo = codigo;
 		this.sexo = sexo;
 		this.edad = edad;
+		this.apellido = apellido;
 		this.nombre = nombre;
 		this.direccion = direccion;
 		this.dni = dni;
@@ -40,11 +41,11 @@ public class PacienteDTO {
 		this.sexo = sexo;
 	}
 
-	public Edad getEdad() {
+	public Long getEdad() {
 		return edad;
 	}
 
-	public void setEdad(Edad edad) {
+	public void setEdad(Long edad) {
 		this.edad = edad;
 	}
 
@@ -78,6 +79,14 @@ public class PacienteDTO {
 
 	public void setMail(String mail) {
 		this.mail = mail;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
 	}
 
 }

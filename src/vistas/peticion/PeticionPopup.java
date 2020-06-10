@@ -1,3 +1,4 @@
+package vistas.peticion;
 //package vistas.peticion;
 //
 //import java.awt.BorderLayout;

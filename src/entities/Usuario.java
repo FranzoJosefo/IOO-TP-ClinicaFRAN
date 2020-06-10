@@ -13,7 +13,7 @@ public class Usuario extends Persona {
 	private Date fechaNacimiento;
 
 	public Usuario(UsuarioDTO usuarioDto) {
-		super(usuarioDto.getNombre(), new Direccion(usuarioDto.getDireccion()), usuarioDto.getDni(),
+		super(usuarioDto.getApellido(), usuarioDto.getNombre(), new Direccion(usuarioDto.getDireccion()), usuarioDto.getDni(),
 				usuarioDto.getMail());
 		this.codigo = usuarioDto.getCodigo();
 		this.credentials = new Credentials(usuarioDto.getCredentialsDto());
@@ -50,7 +50,7 @@ public class Usuario extends Persona {
 	}
 
 	public UsuarioDTO toDTO() {
-		return new UsuarioDTO(codigo, credentials.toDTO(), tipoUsuario, fechaNacimiento, this.getNombre(),
+		return new UsuarioDTO(codigo, credentials.toDTO(), tipoUsuario, fechaNacimiento, this.getApellido(), this.getNombre(),
 				this.getDireccion().toDTO(), this.getDni(), this.getMail());
 	}
 }

@@ -10,13 +10,14 @@ public class UsuarioDTO {
 	private CredentialsDTO credentials;
 	private UsuarioTipo tipoUsuario;
 	private Date fechaNacimiento;
+	private String apellido;
 	private String nombre;
 	private DireccionDTO direccion;
 	private Long dni;
 	private String mail;
 
 	public UsuarioDTO(String codigo, CredentialsDTO credentialsDto, UsuarioTipo tipoUsuario,
-			Date fechaNacimiento, String nombre, DireccionDTO direccion, Long dni, String mail) {
+			Date fechaNacimiento, String apellido, String nombre, DireccionDTO direccion, Long dni, String mail) {
 		this.codigo = codigo;
 		this.credentials = credentialsDto;
 		this.tipoUsuario = tipoUsuario;
@@ -85,6 +86,14 @@ public class UsuarioDTO {
 
 	public void setMail(String mail) {
 		this.mail = mail;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
 	}
 
 }
