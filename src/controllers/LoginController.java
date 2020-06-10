@@ -11,18 +11,16 @@ public enum LoginController {
 
 	private Usuario currentUser;
 
-	public UsuarioDTO login(CredentialsDTO credentialsDto) throws Exception {
+	public void login(CredentialsDTO credentialsDto, OnLoginCallback callback) throws Exception {
 		Credentials credentials = new Credentials(credentialsDto);
 		try {
-
 			currentUser = UsuarioController.INSTANCE.getUsuarioByCredentials(credentials);
-			
+			callback.onLoginSuccess();
 		} catch (Exception e) {
+			callback.onLoginFailure();
 			throw new Exception("El usuario y/o la password son incorrectos. ");
 		}
-		
-		return currentUser.toDTO();
-		
+				
 	}
 	
 	public UsuarioDTO getCurrentUserDTO() {
