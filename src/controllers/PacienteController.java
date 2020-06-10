@@ -1,13 +1,14 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import data.ApiService;
 import dtos.DireccionDTO;
 import dtos.PacienteDTO;
 import entities.Direccion;
 import entities.Paciente;
+import enums.DataFilesNames;
 import enums.PrefijoCodigo;
 import utils.CodigoGenerator;
 
@@ -20,42 +21,38 @@ public enum PacienteController {
 
 	PacienteController() {
 		pacientesCreados = 0;
-		pacientes = new ArrayList();
-		fetchPacientesJson();
+		pacientes = fetchPacientesPersistidos();
 	}
 
 	public void createPaciente(PacienteDTO pacienteDto) {
 		pacienteDto.setCodigo(generateCodigoPaciente());
 		Paciente newPaciente = new Paciente(pacienteDto);
 		pacientes.add(newPaciente);
-		updatePacientesJson();
+		updatePacientesPersistidos();
 	}
 
-	private void fetchPacientesJson() {
-		String file = "./pacientes.txt";
-		List<PacienteDTO> dtos = ApiService.leer(PacienteDTO.class, file);
-		for (PacienteDTO dto : dtos) {
-			pacientes.add(new Paciente(dto));
-		}
+	private List<Paciente> fetchPacientesPersistidos() {
+		List<PacienteDTO> dtos = ApiService.leer(PacienteDTO.class, DataFilesNames.FILE_PACIENTES.getName());
+		return dtos.stream()
+				.map(Paciente::new)
+				.collect(Collectors.toList());				
 	}
 
-	private void updatePacientesJson() {
-		String file = "./pacientes.txt";
-		
-		ApiService.grabar(getPacientesDTO(), file);
+	private void updatePacientesPersistidos() {
+		ApiService.grabar(getPacientesDTO(), DataFilesNames.FILE_PACIENTES.getName());
 	}
 
 	public Paciente getPaciente(String codigoPaciente) throws Exception {
-		return pacientes.stream().filter(p -> p.getCodigo().equals(codigoPaciente)).findFirst()
+		return pacientes.stream()
+				.filter(p -> p.getCodigo().equals(codigoPaciente))
+				.findFirst()
 				.orElseThrow(() -> new Exception("No se ha encontrado el paciente"));
 	}
 	
 	public List<PacienteDTO> getPacientesDTO() {
-		List<PacienteDTO> dtos = new ArrayList<PacienteDTO>();
-		for (Paciente paciente : pacientes) {
-			dtos.add(paciente.toDto());
-		}
-		return dtos;
+		return pacientes.stream()
+				.map(Paciente::toDto)
+				.collect(Collectors.toList());
 	}
 
 	public void deletePaciente(String codigoPaciente) throws Exception {

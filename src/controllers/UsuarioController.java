@@ -1,13 +1,15 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import data.ApiService;
 import dtos.DireccionDTO;
 import dtos.UsuarioDTO;
 import entities.Direccion;
 import entities.Usuario;
+import enums.DataFilesNames;
 import enums.PrefijoCodigo;
 import utils.CodigoGenerator;
 
@@ -20,7 +22,7 @@ public enum UsuarioController {
 	
 	UsuarioController() {
 		usuariosCreados = 0;
-		usuarios = new ArrayList();
+		usuarios = fetchUsuariosPersistidos();
 	}
 	
 	public void createUsuario(UsuarioDTO usuarioDto) {
@@ -29,6 +31,24 @@ public enum UsuarioController {
 		usuarioDto.setCodigo(generateCodigoUsuario());
 		Usuario newUsuario = new Usuario(usuarioDto);
 		usuarios.add(newUsuario);
+		updateUsuariosPersistidos();
+	}
+	
+	private List<Usuario> fetchUsuariosPersistidos() {
+		List<UsuarioDTO> dtos = ApiService.leer(UsuarioDTO.class, DataFilesNames.FILE_USUARIOS.getName());
+		return dtos.stream()
+				.map(Usuario::new)
+				.collect(Collectors.toList());				
+	}
+
+	private void updateUsuariosPersistidos() {
+		ApiService.grabar(getUsuariosDTO(), DataFilesNames.FILE_USUARIOS.getName());
+	}
+	
+	public List<UsuarioDTO> getUsuariosDTO() {
+		return usuarios.stream()
+				.map(Usuario::toDTO)
+				.collect(Collectors.toList());
 	}
 	
 	public Usuario getUsuario(String codigoUsuario) throws Exception {

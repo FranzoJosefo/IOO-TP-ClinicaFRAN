@@ -1,10 +1,12 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import data.ApiService;
 import dtos.SucursalDTO;
 import entities.Sucursal;
+import enums.DataFilesNames;
 import enums.PrefijoCodigo;
 import utils.CodigoGenerator;
 
@@ -17,7 +19,7 @@ public enum SucursalController {
 	
 	SucursalController() {
 		sucursalesCreadas = 0;
-		sucursales = new ArrayList();
+		sucursales = fetchSucursalesPersistidas();
 	}
 	
 	public void createSucursal(SucursalDTO sucursalDto) throws Exception {
@@ -25,13 +27,31 @@ public enum SucursalController {
 		sucursalDto.setCodigo(generateCodigoSucursal());
 		Sucursal newSucursal = new Sucursal(sucursalDto);
 		sucursales.add(newSucursal);
+		updateSucursalesPersistidas();
+	}
+	
+	private List<Sucursal> fetchSucursalesPersistidas() {
+		List<SucursalDTO> dtos = ApiService.leer(SucursalDTO.class, DataFilesNames.FILE_SUCURSALES.getName());
+		return dtos.stream()
+				.map(Sucursal::new)
+				.collect(Collectors.toList());				
+	}
+
+	private void updateSucursalesPersistidas() {
+		ApiService.grabar(getSucursalesDTO(), DataFilesNames.FILE_SUCURSALES.getName());
+	}
+	
+	public List<SucursalDTO> getSucursalesDTO() {
+		return sucursales.stream()
+				.map(Sucursal::toDTO)
+				.collect(Collectors.toList());
 	}
 	
 	public Sucursal getSucursal(String codigoSucursal) throws Exception {
 		return sucursales.stream()
-		.filter(s -> s.getCodigo().equals(codigoSucursal))
-		.findFirst()
-		.orElseThrow(() -> new Exception("No se ha encontrado la sucursal"));
+				.filter(s -> s.getCodigo().equals(codigoSucursal))
+				.findFirst()
+				.orElseThrow(() -> new Exception("No se ha encontrado la sucursal"));
 	}
 	
 	public void deleteSucursal(String codigoSucursal) throws Exception {

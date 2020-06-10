@@ -1,10 +1,12 @@
 package controllers;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import data.ApiService;
 import dtos.PracticaDTO;
 import entities.Practica;
+import enums.DataFilesNames;
 import enums.PrefijoCodigo;
 import utils.CodigoGenerator;
 
@@ -17,13 +19,31 @@ public enum PracticaController {
 	
 	PracticaController() {
 		practicasCreadas = 0;
-		practicas = new ArrayList();
+		practicas = fetchPracticasPersistidas();
 	}
 	
 	public void createPractica(PracticaDTO practicaDto) {
 		practicaDto.setCodigo(generateCodigoPractica());
 		Practica newPractica = new Practica(practicaDto);
 		practicas.add(newPractica);
+		updatePracticasPersistidas();
+	}
+	
+	private List<Practica> fetchPracticasPersistidas() {
+		List<PracticaDTO> dtos = ApiService.leer(PracticaDTO.class, DataFilesNames.FILE_PRACTICAS.getName());
+		return dtos.stream()
+				.map(Practica::new)
+				.collect(Collectors.toList());				
+	}
+
+	private void updatePracticasPersistidas() {
+		ApiService.grabar(getPracticaDTO(), DataFilesNames.FILE_PRACTICAS.getName());
+	}
+	
+	public List<PracticaDTO> getPracticaDTO() {
+		return practicas.stream()
+				.map(Practica::toDto)
+				.collect(Collectors.toList());
 	}
 	
 	public Practica getPractica(String codigoPractica) throws Exception {
