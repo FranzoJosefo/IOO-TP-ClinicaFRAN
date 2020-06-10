@@ -64,6 +64,7 @@ public class PacienteView {
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 			if (dialog.getModalResult() == ModalResult.OK)
+				// faltaria agregarlo realmente en memoria, no solo a la tabla
 				pacienteTable.agregar(dialog.getPaciente());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -79,6 +80,7 @@ public class PacienteView {
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 			if (dialog.getModalResult() == ModalResult.OK)
+				// faltaria modificar realmente en memoria, no solo a la tabla
 				pacienteTable.refresh();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -111,7 +113,7 @@ public class PacienteView {
 		}				
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 752, 560);
+		frame.setBounds(100, 100, 1000, 400);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		JPanel panel = new JPanel();
@@ -134,6 +136,8 @@ public class PacienteView {
 				agregarPaciente();
 			}
 		});
+		
+		// faltaria implementar el delete, que borre de la base y de la lista
 		
 		JSeparator separator = new JSeparator();
 		GroupLayout gl_panel = new GroupLayout(panel);

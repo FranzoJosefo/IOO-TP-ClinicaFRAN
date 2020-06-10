@@ -35,5 +35,10 @@ public class DireccionDTO {
 	public void setLocalidad(String localidad) {
 		this.localidad = localidad;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("%s %s - %s", calle, numero, localidad);
+	}
 
 }

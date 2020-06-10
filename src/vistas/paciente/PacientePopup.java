@@ -45,7 +45,7 @@ public class PacientePopup extends JDialog {
 	
 	private void inicializarControles() {
 		
-		setBounds(100, 100, 450, 245);
+		setBounds(100, 100, 400, 370);
 		
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -232,6 +232,7 @@ public class PacientePopup extends JDialog {
 		txtNumero.setValue(paciente.getDireccion().getNumero());
 		txtLocalidad.setText(paciente.getDireccion().getLocalidad());
 	}
+	
 	public void setPaciente(PacienteDTO paciente) {
 		this.paciente = paciente;
 		asignarDatosForm();

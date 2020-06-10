@@ -49,7 +49,7 @@ public class PacienteTable extends AbstractTableModel{
 			case 3: return lista.get(rowIndex).getDni();
 			case 4: return lista.get(rowIndex).getEdad();
 			case 5: return lista.get(rowIndex).getSexo();
-			case 6: return lista.get(rowIndex).getDireccion();
+			case 6: return lista.get(rowIndex).getDireccion().toString();
 			case 7: return lista.get(rowIndex).getMail();
 			default: return null; 
 		}
