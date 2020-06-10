@@ -1,6 +1,7 @@
 package controllers;
 
 import dtos.CredentialsDTO;
+import dtos.UsuarioDTO;
 import entities.Credentials;
 import entities.Usuario;
 import enums.UsuarioTipo;
@@ -10,6 +11,7 @@ public enum LoginController {
 
 	private static UsuarioController usuarioController = UsuarioController.INSTANCE;
 	private Credentials credentials;
+	private Usuario currentUser;
 
 	private LoginController() {
 
@@ -19,8 +21,12 @@ public enum LoginController {
 		credentials = new Credentials(credentialsDto);
 		try {
 			//Solo devlovera usuario si lo encuentra, por ende las credenciales son correctas
-			Usuario usuario = usuarioController.getUsuarioByCredentials(credentials);
-			UsuarioTipo tipo = usuario.getTipoUsuario();
+			currentUser = usuarioController.getUsuarioByCredentials(credentials);
+			
+			
+			//Esto de aca abajo en realidad habria que tenerlo en la vista, usando getCUrrentUserDTO.getTipoUSuario y ahcer un switch asi para ver que escondemos y que no 
+			//al cargar la pantalla principal.
+			UsuarioTipo tipo = currentUser.getTipoUsuario();
 			switch(tipo) {
 				case ADMINISTRADOR:
 					//TODO nocultar vistas? 
@@ -36,6 +42,10 @@ public enum LoginController {
 			// Mando error a la vista:  USUARIO O CONTRASEÑA INCORRECTOS
 			e.printStackTrace();
 		}
+	}
+	
+	public UsuarioDTO getCurrentUserDTO() {
+		return currentUser.toDTO();
 	}
 
 }
