@@ -16,6 +16,16 @@ public class Paciente extends Persona {
 		this.sexo = pacienteDto.getSexo();
 		this.edad = pacienteDto.getEdad();
 	}
+	
+	public void update(PacienteDTO pacienteDto) {
+		this.setApellido(pacienteDto.getApellido());
+		this.setNombre(pacienteDto.getNombre());
+		this.setDni(pacienteDto.getDni());
+		this.setEdad(pacienteDto.getEdad());
+		this.setSexo(pacienteDto.getSexo());
+		this.setMail(pacienteDto.getMail());
+		this.setDireccion(new Direccion(pacienteDto.getDireccion()));
+	}
 
 	public String getCodigo() {
 		return codigo;

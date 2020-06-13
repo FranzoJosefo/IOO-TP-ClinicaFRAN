@@ -33,11 +33,11 @@ public class PacientePopup extends JDialog {
 	private JFormattedTextField txtDNI;
 	private JTextField txtApellido;
 	private JTextField txtNombre;
-	private JComboBox txtSexo;
+	private JComboBox<Sexo> txtSexo;
 	private JFormattedTextField txtEdad;
 	private JTextField txtMail;
 	private JTextField txtCalle;
-	private JFormattedTextField txtNumero;
+	private JTextField txtNumero;
 	private JTextField txtLocalidad;
 	
 	private PacienteDTO paciente; 
@@ -65,18 +65,19 @@ public class PacientePopup extends JDialog {
 		txtNombre.setColumns(10);
 		
 		JLabel lblSexo = new JLabel("Sexo");
-		txtSexo = new JComboBox();
-		txtSexo.setModel(new DefaultComboBoxModel(Sexo.values()));
+		txtSexo = new JComboBox<Sexo>();
+		txtSexo.setModel(new DefaultComboBoxModel<Sexo>(Sexo.values()));
+		//txtSexo.
 		
 		JLabel lblEdad = new JLabel("Edad");
-		NumberFormat format = NumberFormat.getInstance();
-	    NumberFormatter formatter = new NumberFormatter(format);
-	    formatter.setValueClass(Integer.class);
-	    formatter.setMinimum(-1); 
-	    formatter.setMaximum(130); 
-	    formatter.setAllowsInvalid(false);
-	    formatter.setCommitsOnValidEdit(true);
-		txtEdad = new JFormattedTextField(formatter);
+		NumberFormat formatEdad = NumberFormat.getInstance();
+	    NumberFormatter formatterEdad = new NumberFormatter(formatEdad);
+	    formatterEdad.setValueClass(Integer.class);
+	    formatterEdad.setMinimum(0); 
+	    formatterEdad.setMaximum(130);
+	    formatterEdad.setAllowsInvalid(false);
+	    formatterEdad.setCommitsOnValidEdit(true);
+		txtEdad = new JFormattedTextField(formatterEdad);
 		txtEdad.setColumns(10);	
 		
 		JLabel lblMail = new JLabel("Mail");
@@ -88,7 +89,7 @@ public class PacientePopup extends JDialog {
 		txtCalle.setColumns(10);
 		
 		JLabel lblNumero = new JLabel("Numero");
-		txtNumero = new JFormattedTextField();
+		txtNumero = new JTextField();
 		txtNumero.setColumns(10);
 		
 		JLabel lblLocalidad = new JLabel("Localidad");
@@ -211,8 +212,8 @@ public class PacientePopup extends JDialog {
 	}
 
 	private void asignarDatosEntidad() {
-		paciente = new PacienteDTO(null, 
-								   Sexo.valueOf(txtSexo.getToolTipText()), 
+		paciente = new PacienteDTO(paciente != null ? paciente.getCodigo() : null, 
+								   Sexo.valueOf(String.valueOf(txtSexo.getSelectedItem())), 
 								   Long.valueOf(txtEdad.getText()), 
 								   txtApellido.getText(), 
 								   txtNombre.getText(), 
@@ -229,7 +230,7 @@ public class PacientePopup extends JDialog {
 		txtEdad.setValue(paciente.getEdad());
 		txtMail.setText(paciente.getMail());
 		txtCalle.setText(paciente.getDireccion().getCalle());
-		txtNumero.setValue(paciente.getDireccion().getNumero());
+		txtNumero.setText(String.valueOf(paciente.getDireccion().getNumero()));
 		txtLocalidad.setText(paciente.getDireccion().getLocalidad());
 	}
 	

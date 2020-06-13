@@ -5,10 +5,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import main.java.dto.CredentialsDTO;
-import main.java.dto.DireccionDTO;
 import main.java.dto.UsuarioDTO;
 import main.java.entity.Credentials;
-import main.java.entity.Direccion;
 import main.java.entity.Usuario;
 import main.java.enumeration.DataFilesNames;
 import main.java.enumeration.PrefijoCodigo;
@@ -26,37 +24,31 @@ public enum UsuarioController {
 	UsuarioController() {
 		usuariosCreados = 0;
 		ApiService.grabar(EntitiesMocks.getUsuariosMock(), DataFilesNames.FILE_USUARIOS.getName());
-		usuarios = fetchUsuariosPersistidos();
-	}
-	
-	public void createUsuario(UsuarioDTO usuarioDto) throws Exception {
-		checkNotExistsUsername(usuarioDto.getCredentialsDto());
-		usuarioDto.setCodigo(generateCodigoUsuario());
-		Usuario newUsuario = new Usuario(usuarioDto);
-		usuarios.add(newUsuario);
-		updateUsuariosPersistidos();
-	}
-	
-	private List<Usuario> fetchUsuariosPersistidos() {
-		List<UsuarioDTO> dtos = ApiService.leer(UsuarioDTO.class, DataFilesNames.FILE_USUARIOS.getName());
-		return dtos.stream()
-				.map(Usuario::new)
-				.collect(Collectors.toList());				
-	}
-
-	private void updateUsuariosPersistidos() {
-		ApiService.grabar(getUsuariosDTO(), DataFilesNames.FILE_USUARIOS.getName());
-	}
-	
-	public List<UsuarioDTO> getUsuariosDTO() {
-		return usuarios.stream()
-				.map(Usuario::toDTO)
-				.collect(Collectors.toList());
+		usuarios = getUsuariosFromDataBase();
 	}
 	
 	public Usuario getUsuario(String codigoUsuario) throws Exception {
 		return findUsuario(codigoUsuario)
 				.orElseThrow(() -> new Exception("No se ha encontrado el usuario"));
+	}
+	
+	public void createUsuario(UsuarioDTO usuarioDto) throws Exception {
+		validateNotExistsUsername(usuarioDto.getCredentialsDto());
+		usuarioDto.setCodigo(generateCodigoUsuario());
+		Usuario newUsuario = new Usuario(usuarioDto);
+		usuarios.add(newUsuario);
+		updateUsuariosDataBase();
+	}
+	
+	public void updateUsuario(UsuarioDTO usuarioDto) throws Exception {
+		Usuario existingUsuario = getUsuario(usuarioDto.getCodigo());
+		existingUsuario.update(usuarioDto);
+		updateUsuariosDataBase();
+	}
+	
+	public void deleteUsuario(String codigoUsuario) {
+		usuarios.removeIf(u -> u.getCodigo().equals(codigoUsuario));
+		updateUsuariosDataBase();
 	}
 	
 	public Usuario getUsuarioByCredentials(Credentials credentials) throws Exception {
@@ -69,9 +61,9 @@ public enum UsuarioController {
 				.isPresent();
 	}
 	
-	private void checkNotExistsUsername(CredentialsDTO credentialsDto) throws Exception {
+	private void validateNotExistsUsername(CredentialsDTO credentialsDto) throws Exception {
 		if(existsUsername(credentialsDto)) {
-			throw new Exception("El nombre de usuario ya est� en uso.");
+			throw new Exception("El nombre de usuario ya esta en uso.");
 		}
 	}
 	
@@ -94,17 +86,26 @@ public enum UsuarioController {
 				.findFirst();
 	}
 	
-	public void deleteUsuario(String codigoUsuario) {
-		usuarios.removeIf(u -> u.getCodigo().equals(codigoUsuario));
+	private List<Usuario> getUsuariosFromDataBase() {
+		List<UsuarioDTO> dtos = ApiService.leer(UsuarioDTO.class, DataFilesNames.FILE_USUARIOS.getName());
+		return dtos.stream()
+				.map(Usuario::new)
+				.collect(Collectors.toList());				
+	}
+
+	private void updateUsuariosDataBase() {
+		ApiService.grabar(getAllUsuariosDTO(), DataFilesNames.FILE_USUARIOS.getName());
 	}
 	
-	public Direccion createDireccion(DireccionDTO direccionDto) {
-		return new Direccion(direccionDto);
+	public List<UsuarioDTO> getAllUsuariosDTO() {
+		return usuarios.stream()
+				.map(Usuario::toDTO)
+				.collect(Collectors.toList());
 	}
 	
 	private String generateCodigoUsuario() {
 		usuariosCreados++;
-		return CodigoGenerator.generateCodigo(PrefijoCodigo.USUARIO, usuariosCreados);
+		return CodigoGenerator.generateCodigo(PrefijoCodigo.USR, usuariosCreados);
 	}
 	
 }

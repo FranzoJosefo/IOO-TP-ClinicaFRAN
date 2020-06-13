@@ -64,7 +64,7 @@ public class PacienteView {
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 			if (dialog.getModalResult() == ModalResult.OK)
-				// faltaria agregarlo realmente en memoria, no solo a la tabla
+				PacienteController.INSTANCE.createPaciente(dialog.getPaciente());
 				pacienteTable.agregar(dialog.getPaciente());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -80,8 +80,19 @@ public class PacienteView {
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 			if (dialog.getModalResult() == ModalResult.OK)
-				// faltaria modificar realmente en memoria, no solo a la tabla
-				pacienteTable.refresh();
+				PacienteController.INSTANCE.updatePaciente(dialog.getPaciente());
+				pacienteTable.actualizar(dialog.getPaciente(), selectedRow);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}			
+	}
+	
+	private void eliminarPaciente() {
+		try {
+			int selectedRow = table.getSelectedRow();
+			String pacienteCodigo = String.valueOf(pacienteTable.getValueAt(selectedRow, CODIGO_COLUMN));
+			PacienteController.INSTANCE.deletePaciente(pacienteCodigo);
+			pacienteTable.eliminar(selectedRow);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}			
@@ -122,6 +133,11 @@ public class PacienteView {
 		frame.getContentPane().add(panel, BorderLayout.SOUTH);
 		
 		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				eliminarPaciente();
+			}
+		});
 		
 		JButton btnModificar = new JButton("Modificar");
 		btnModificar.addActionListener(new ActionListener() {

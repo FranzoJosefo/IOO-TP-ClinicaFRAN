@@ -8,10 +8,15 @@ public class Sucursal {
 	private Direccion direccion;
 	private String responsableCodigo;
 
-	public Sucursal(SucursalDTO dto) {
-		this.codigo = dto.getCodigo();
-		this.direccion = new Direccion(dto.getDireccion());
-		this.responsableCodigo = dto.getResponsableCodigo();
+	public Sucursal(SucursalDTO sucursalDto) {
+		this.codigo = sucursalDto.getCodigo();
+		this.direccion = new Direccion(sucursalDto.getDireccion());
+		this.responsableCodigo = sucursalDto.getResponsableCodigo();
+	}
+	
+	public void update(SucursalDTO sucursalDto) {
+		this.setResponsableCodigo(sucursalDto.getResponsableCodigo());
+		this.setDireccion(new Direccion(sucursalDto.getDireccion()));
 	}
 
 	public String getCodigo() {
@@ -30,12 +35,12 @@ public class Sucursal {
 		this.direccion = direccion;
 	}
 
-	public String getResponsable() {
+	public String getResponsableCodigo() {
 		return responsableCodigo;
 	}
 
-	public void setResponsable(String responsable) {
-		this.responsableCodigo = responsable;
+	public void setResponsableCodigo(String responsableCodigo) {
+		this.responsableCodigo = responsableCodigo;
 	}
 
 	public SucursalDTO toDTO() {

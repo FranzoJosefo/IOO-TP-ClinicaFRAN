@@ -20,6 +20,16 @@ public class Usuario extends Persona {
 		this.tipoUsuario = usuarioDto.getTipoUsuario();
 		this.fechaNacimiento = usuarioDto.getFechaNacimiento();
 	}
+	
+	public void update(UsuarioDTO usuarioDto) {
+		this.setApellido(usuarioDto.getApellido());
+		this.setNombre(usuarioDto.getNombre());
+		this.setDni(usuarioDto.getDni());
+		this.setFechaNacimiento(usuarioDto.getFechaNacimiento());
+		this.setMail(usuarioDto.getMail());
+		this.setTipoUsuario(usuarioDto.getTipoUsuario());
+		this.setDireccion(new Direccion(usuarioDto.getDireccion()));
+	}
 
 	public String getCodigo() {
 		return codigo;

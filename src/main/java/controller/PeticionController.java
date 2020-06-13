@@ -97,7 +97,7 @@ public enum PeticionController {
 	
 	private String generateCodigoPeticion() {
 		peticionesCreadas++;
-		return CodigoGenerator.generateCodigo(PrefijoCodigo.PETICION, peticionesCreadas);
+		return CodigoGenerator.generateCodigo(PrefijoCodigo.PET, peticionesCreadas);
 	}
 	
 }

@@ -24,6 +24,15 @@ public class Practica {
 		this.tipo = practicaDto.getTipo();
 		this.valoresPosibles = PracticaValoresFactory.createPracticaValores(practicaDto.getTipo(), practicaDto.getValoresPosibles());
 	}
+	
+	public void update(PracticaDTO practicaDto) {
+		this.setNombre(practicaDto.getNombre());
+		this.setTipo(practicaDto.getTipo());
+		this.setHabilitada(practicaDto.isHabilitada());
+		this.setGrupo(practicaDto.getGrupo());
+		this.setHorasEsperaResultado(practicaDto.getHorasEsperaResultado());
+		this.setValoresPosibles(PracticaValoresFactory.createPracticaValores(practicaDto.getTipo(), practicaDto.getValoresPosibles()));
+	}
 
 	public String getCodigo() {
 		return codigo;

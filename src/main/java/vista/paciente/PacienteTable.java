@@ -21,7 +21,7 @@ public class PacienteTable extends AbstractTableModel{
 	public Class getColumnClass(int col) { return columnClasses[col]; } 
 	
 	public PacienteTable() {
-		lista = PacienteController.INSTANCE.getPacientesDTO();
+		lista = PacienteController.INSTANCE.getAllPacientesDTO();
 	}
 	
 	@Override
@@ -57,6 +57,11 @@ public class PacienteTable extends AbstractTableModel{
 	
 	public void agregar(PacienteDTO paciente) {
 		lista.add(paciente);
+		fireTableDataChanged();
+	}
+	
+	public void actualizar(PacienteDTO paciente, int index) {
+		lista.set(index, paciente);
 		fireTableDataChanged();
 	}
 	
