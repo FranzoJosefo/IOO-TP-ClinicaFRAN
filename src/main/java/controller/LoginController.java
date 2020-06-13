@@ -23,7 +23,7 @@ public enum LoginController {
 	}
 	
 	public UsuarioDTO getCurrentUserDTO() {
-		return currentUser.toDTO();
+		return currentUser.toDto();
 	}
 
 }

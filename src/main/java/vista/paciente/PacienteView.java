@@ -152,9 +152,7 @@ public class PacienteView {
 				agregarPaciente();
 			}
 		});
-		
-		// faltaria implementar el delete, que borre de la base y de la lista
-		
+				
 		JSeparator separator = new JSeparator();
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(

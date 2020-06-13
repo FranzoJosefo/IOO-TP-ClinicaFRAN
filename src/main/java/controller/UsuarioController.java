@@ -99,7 +99,7 @@ public enum UsuarioController {
 	
 	public List<UsuarioDTO> getAllUsuariosDTO() {
 		return usuarios.stream()
-				.map(Usuario::toDTO)
+				.map(Usuario::toDto)
 				.collect(Collectors.toList());
 	}
 	

@@ -9,6 +9,10 @@ public class Usuario extends Persona {
 
 	private String codigo;
 	private Credentials credentials;
+	public void setCredentials(Credentials credentials) {
+		this.credentials = credentials;
+	}
+
 	private UsuarioTipo tipoUsuario;
 	private Date fechaNacimiento;
 
@@ -22,6 +26,7 @@ public class Usuario extends Persona {
 	}
 	
 	public void update(UsuarioDTO usuarioDto) {
+		this.setCredentials(new Credentials(usuarioDto.getCredentialsDto()));
 		this.setApellido(usuarioDto.getApellido());
 		this.setNombre(usuarioDto.getNombre());
 		this.setDni(usuarioDto.getDni());
@@ -59,7 +64,7 @@ public class Usuario extends Persona {
 		this.tipoUsuario = tipoUsuario;
 	}
 
-	public UsuarioDTO toDTO() {
+	public UsuarioDTO toDto() {
 		return new UsuarioDTO(codigo, credentials.toDTO(), tipoUsuario, fechaNacimiento, this.getApellido(), this.getNombre(),
 				this.getDireccion().toDTO(), this.getDni(), this.getMail());
 	}

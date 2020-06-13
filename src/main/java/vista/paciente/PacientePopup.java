@@ -67,7 +67,6 @@ public class PacientePopup extends JDialog {
 		JLabel lblSexo = new JLabel("Sexo");
 		txtSexo = new JComboBox<Sexo>();
 		txtSexo.setModel(new DefaultComboBoxModel<Sexo>(Sexo.values()));
-		//txtSexo.
 		
 		JLabel lblEdad = new JLabel("Edad");
 		NumberFormat formatEdad = NumberFormat.getInstance();
