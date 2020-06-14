@@ -5,8 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Properties;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
@@ -22,26 +21,31 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.DateFormatter;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 import main.java.dto.CredentialsDTO;
 import main.java.dto.DireccionDTO;
 import main.java.dto.UsuarioDTO;
 import main.java.enumeration.UsuarioTipo;
+import main.java.util.DateUtil;
 import main.java.vista.ModalResult;
+import main.java.vista.util.DateLabelFormatter;
+
 
 public class UsuarioPopup extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	
 	private JTextField txtNombreUsuario;
-	//private JTextField txtPassword;
 	private JPasswordField txtPassword;
 	private JComboBox<UsuarioTipo> txtTipo;
 	private JTextField txtApellido;
 	private JTextField txtNombre;
 	private JFormattedTextField txtDNI;
-	private JFormattedTextField txtFechaNacimiento;
+	private JDatePickerImpl txtFechaNacimiento;
 	private JTextField txtMail;
 	private JTextField txtCalle;
 	private JTextField txtNumero;
@@ -49,9 +53,7 @@ public class UsuarioPopup extends JDialog {
 	
 	private UsuarioDTO usuarioDto; 
 	private ModalResult modalResult;
-	
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	
+		
 	private void inicializarControles() {
 		
 		setBounds(100, 100, 450, 450);
@@ -86,13 +88,13 @@ public class UsuarioPopup extends JDialog {
 		txtTipo.setModel(new DefaultComboBoxModel<UsuarioTipo>(UsuarioTipo.values()));
 		
 		JLabel lblFechaNac = new JLabel("Fecha de nacimiento");
-	    DateFormatter formatterFechaNac = new DateFormatter(dateFormat);
-	    formatterFechaNac.setValueClass(Date.class);
-	    formatterFechaNac.setAllowsInvalid(false);
-	    formatterFechaNac.setCommitsOnValidEdit(true);
-	    txtFechaNacimiento = new JFormattedTextField(formatterFechaNac);
-	    txtFechaNacimiento.setColumns(10);	
-		
+		UtilDateModel model = new UtilDateModel();
+		DateLabelFormatter formatterFechaNac = new DateLabelFormatter();
+		Properties properties = new Properties();		
+		properties.put("text.today", "Today");
+	    JDatePanelImpl datePanel = new JDatePanelImpl(model, properties);
+	    txtFechaNacimiento = new JDatePickerImpl(datePanel, formatterFechaNac);
+	    		
 		JLabel lblMail = new JLabel("Mail");
 		txtMail = new JTextField();
 		txtMail.setColumns(10);
@@ -241,7 +243,7 @@ public class UsuarioPopup extends JDialog {
 			usuarioDto = new UsuarioDTO(usuarioDto != null ? usuarioDto.getCodigo() : null, 
 									   new CredentialsDTO(txtNombreUsuario.getText(), txtPassword.getText()),
 									   UsuarioTipo.valueOf(String.valueOf(txtTipo.getSelectedItem())), 
-									   dateFormat.parse(txtFechaNacimiento.getText()), 
+									   DateUtil.getDateFormat().parse(txtFechaNacimiento.getJFormattedTextField().getText()), 
 									   txtApellido.getText(), 
 									   txtNombre.getText(), 
 									   new DireccionDTO(txtCalle.getText(), Integer.valueOf(txtNumero.getText()), txtLocalidad.getText()), 
@@ -261,7 +263,7 @@ public class UsuarioPopup extends JDialog {
 		txtApellido.setText(usuarioDto.getApellido());
 		txtNombre.setText(usuarioDto.getNombre());
 		txtDNI.setText(String.valueOf(usuarioDto.getDni()));
-		txtFechaNacimiento.setValue(usuarioDto.getFechaNacimiento());
+		txtFechaNacimiento.getJFormattedTextField().setText(DateUtil.getDateFormat().format(usuarioDto.getFechaNacimiento()));
 		txtMail.setText(usuarioDto.getMail());
 		txtCalle.setText(usuarioDto.getDireccion().getCalle());
 		txtNumero.setText(String.valueOf(usuarioDto.getDireccion().getNumero()));
