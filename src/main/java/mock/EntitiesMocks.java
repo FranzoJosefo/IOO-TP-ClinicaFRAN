@@ -9,6 +9,7 @@ import java.util.List;
 import main.java.dto.CredentialsDTO;
 import main.java.dto.DireccionDTO;
 import main.java.dto.PacienteDTO;
+import main.java.dto.SucursalDTO;
 import main.java.dto.UsuarioDTO;
 import main.java.enumeration.Sexo;
 import main.java.enumeration.UsuarioTipo;
@@ -43,10 +44,18 @@ public class EntitiesMocks {
 			usuariosMock.add(new UsuarioDTO("USU3_TEST", new CredentialsDTO("laboratorista", "laboratorista"),
 					UsuarioTipo.LABORATORISTA, sdf.parse("12/03/1976"), "Banderas", "Antonio",
 					new DireccionDTO("Francia", 300, "San Isidro"), new Long(38106541), "laborat@gmail.com"));
+			usuariosMock.add(new UsuarioDTO("USU4_TEST", new CredentialsDTO("laboratorista2", "laboratorista2"),
+					UsuarioTipo.LABORATORISTA, sdf.parse("12/03/1976"), "Adolfina", "Pedro",
+					new DireccionDTO("Uruguay", 450, "San Pedro"), new Long(34234676), "laborat2@gmail.com"));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return usuariosMock;
+	}
+	
+	public static List<SucursalDTO> getSucursalesMock() {
+		List<SucursalDTO> sucursalesMock = new ArrayList();
+		sucursalesMock.add(new SucursalDTO("SUC1_TEST", new DireccionDTO("Libertador", 1503, "Olivos"), "USU3_TEST"));
+		return sucursalesMock;
 	}
 }

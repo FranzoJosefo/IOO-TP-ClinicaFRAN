@@ -7,6 +7,7 @@ import main.java.dto.SucursalDTO;
 import main.java.entity.Sucursal;
 import main.java.enumeration.DataFilesNames;
 import main.java.enumeration.PrefijoCodigo;
+import main.java.mock.EntitiesMocks;
 import main.java.rest.ApiService;
 import main.java.util.CodigoGenerator;
 
@@ -19,6 +20,7 @@ public enum SucursalController {
 	
 	SucursalController() {
 		sucursalesCreadas = 0;
+		ApiService.grabar(EntitiesMocks.getSucursalesMock(), DataFilesNames.FILE_SUCURSALES.getName());
 		sucursales = getSucursalesFromDataBase();
 	}
 	
@@ -30,7 +32,7 @@ public enum SucursalController {
 	}
 	
 	public void createSucursal(SucursalDTO sucursalDto) throws Exception {
-		checkResponsableExists(sucursalDto.getResponsableCodigo());
+		checkResponsableEnabled(sucursalDto.getResponsableCodigo());
 		sucursalDto.setCodigo(generateCodigoSucursal());
 		Sucursal newSucursal = new Sucursal(sucursalDto);
 		sucursales.add(newSucursal);
@@ -38,6 +40,7 @@ public enum SucursalController {
 	}
 	
 	public void updateSucursal(SucursalDTO sucursalDto) throws Exception {
+		checkResponsableEnabled(sucursalDto.getResponsableCodigo());
 		Sucursal existingSucursal = getSucursal(sucursalDto.getCodigo());
 		existingSucursal.update(sucursalDto);
 		updateSucursalesDataBase();
@@ -52,9 +55,11 @@ public enum SucursalController {
 		updateSucursalesDataBase();
 	}
 		
-	private void checkResponsableExists(String codigoUsuario) throws Exception {
-		if(!UsuarioController.INSTANCE.existsUsuario(codigoUsuario)) {
-			throw new Exception(String.format("El usuario %s para asignar como responsable no existe.", codigoUsuario));
+	private void checkResponsableEnabled(String responsableAAsignar) throws Exception {
+		if(sucursales.stream()
+				.map(Sucursal::getResponsableCodigo)
+				.anyMatch(responsable -> responsable.equals(responsableAAsignar))) {
+			throw new Exception(String.format("El usuario %s ya se encuentra asignado a una sucursal.", responsableAAsignar));
 		}
 	}
 	

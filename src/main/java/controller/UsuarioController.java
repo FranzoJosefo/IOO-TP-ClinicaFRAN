@@ -10,6 +10,7 @@ import main.java.entity.Credentials;
 import main.java.entity.Usuario;
 import main.java.enumeration.DataFilesNames;
 import main.java.enumeration.PrefijoCodigo;
+import main.java.enumeration.UsuarioTipo;
 import main.java.mock.EntitiesMocks;
 import main.java.rest.ApiService;
 import main.java.util.CodigoGenerator;
@@ -99,6 +100,13 @@ public enum UsuarioController {
 	
 	public List<UsuarioDTO> getAllUsuariosDTO() {
 		return usuarios.stream()
+				.map(Usuario::toDto)
+				.collect(Collectors.toList());
+	}
+	
+	public List<UsuarioDTO> getLaboratoristasDTO() {
+		return usuarios.stream()
+				.filter(usuario -> usuario.getTipoUsuario().equals(UsuarioTipo.LABORATORISTA))
 				.map(Usuario::toDto)
 				.collect(Collectors.toList());
 	}
