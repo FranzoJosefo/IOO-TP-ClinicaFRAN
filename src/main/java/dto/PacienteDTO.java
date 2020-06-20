@@ -1,8 +1,9 @@
 package main.java.dto;
 
+import main.java.Interface.IDto;
 import main.java.enumeration.Sexo;
 
-public class PacienteDTO {
+public class PacienteDTO implements IDto {
 
 	private String codigo;
 	private Sexo sexo;

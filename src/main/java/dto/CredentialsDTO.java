@@ -1,6 +1,9 @@
 package main.java.dto;
 
-public class CredentialsDTO {
+import main.java.Interface.IDto;
+
+public class CredentialsDTO implements IDto {
+	
 	private String username;
 	private String password;
 	

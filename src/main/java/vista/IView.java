@@ -2,6 +2,7 @@ package main.java.vista;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -24,24 +25,32 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
-public class IView {
+public abstract class IView {
 	
-	/*
-	private JFrame frame;
-	private JTable table;
+	protected JFrame frame;
+	protected JTable table;
+	protected ITable entidadTable;
 	
+	protected static int CODIGO_COLUMN = 0;
 	
-	private void initialize() {
+	protected abstract void agregarRegistro();
+	
+	protected abstract void modificarRegistro();
+	
+	protected abstract void eliminarRegistro();
+	
+	protected void init(String name) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}				
-
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 752, 560);
+		frame.setBounds(100, 100, 900, 350);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		JPanel panel = new JPanel();
@@ -50,21 +59,26 @@ public class IView {
 		frame.getContentPane().add(panel, BorderLayout.SOUTH);
 		
 		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				eliminarRegistro();
+			}
+		});
 		
 		JButton btnModificar = new JButton("Modificar");
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				modificarPersona();
+				modificarRegistro();
 			}
 		});
 		
 		JButton btnAgregar = new JButton("Agregar");
 		btnAgregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				agregarPersona();
+				agregarRegistro();
 			}
 		});
-		
+				
 		JSeparator separator = new JSeparator();
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
@@ -99,7 +113,7 @@ public class IView {
 		frame.getContentPane().add(panel_1, BorderLayout.NORTH);
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel lblNewLabel = new JLabel("ABM Demo");
+		JLabel lblNewLabel = new JLabel("Practicas");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panel_1.add(lblNewLabel);
 		
@@ -107,12 +121,12 @@ public class IView {
 		scrollPane.setAutoscrolls(true);
 		frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
 		
-		table = new JTable(tableModel);
+		table = new JTable(entidadTable);
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 	          if (arg0.getClickCount() == 2)
-	          	modificarPersona();
+	          	modificarRegistro();
 			}
 		});
 		table.setAutoCreateRowSorter(true);
@@ -120,6 +134,19 @@ public class IView {
 		scrollPane.setViewportView(table);
 	}
 	
-  */	
+	public void resizeColumnWidth(JTable table) {
+	    final TableColumnModel columnModel = table.getColumnModel();
+	    for (int column = 0; column < table.getColumnCount(); column++) {
+	        int width = 15; 
+	        for (int row = 0; row < table.getRowCount(); row++) {
+	            TableCellRenderer renderer = table.getCellRenderer(row, column);
+	            Component comp = table.prepareRenderer(renderer, row, column);
+	            width = Math.max(comp.getPreferredSize().width +1 , width);
+	        }
+	        if(width > 300)
+	            width=300;
+	        columnModel.getColumn(column).setPreferredWidth(width);
+	    }
+	}
 	
 }

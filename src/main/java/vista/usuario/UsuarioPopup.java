@@ -16,6 +16,7 @@ import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -31,13 +32,12 @@ import main.java.dto.DireccionDTO;
 import main.java.dto.UsuarioDTO;
 import main.java.enumeration.UsuarioTipo;
 import main.java.util.DateUtil;
-import main.java.vista.ModalResult;
+import main.java.vista.IPopup;
 import main.java.vista.util.DateLabelFormatter;
+import main.java.vista.util.ModalResult;
 
 
-public class UsuarioPopup extends JDialog {
-
-	private final JPanel contentPanel = new JPanel();
+public class UsuarioPopup extends IPopup {
 	
 	private JTextField txtNombreUsuario;
 	private JPasswordField txtPassword;
@@ -50,17 +50,14 @@ public class UsuarioPopup extends JDialog {
 	private JTextField txtCalle;
 	private JTextField txtNumero;
 	private JTextField txtLocalidad;
+		
+	public UsuarioPopup(JFrame frame) {
+		super(frame, "Usuario", 450, 450);
+		setLocationRelativeTo(frame);
+		inicializarControles();
+	}
 	
-	private UsuarioDTO usuarioDto; 
-	private ModalResult modalResult;
-		
-	private void inicializarControles() {
-		
-		setBounds(100, 100, 450, 450);
-		
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
+	protected void inicializarControles() {
 	
 		JLabel lblNombreUsuario = new JLabel("Nombre usuario");
 		txtNombreUsuario = new JFormattedTextField();
@@ -195,52 +192,25 @@ public class UsuarioPopup extends JDialog {
 
 					.addContainerGap(60, Short.MAX_VALUE))
 		);
+		
 		contentPanel.setLayout(gl_contentPanel);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						asignarDatosEntidad();
-						modalResult = ModalResult.OK;
-						dispose();
-					}
-				});
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						modalResult = ModalResult.CANCELL;
-						dispose();
-					}
-				});
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
-		}
 		
 	}
 	
-	public UsuarioPopup(JFrame frame) {
-		super(frame, "Usuario", true);
-		setLocationRelativeTo(frame);
-		inicializarControles();
-	}
-
 	public UsuarioDTO getUsuario() {
-		return usuarioDto;
+		return (UsuarioDTO) dto;
+	}
+	
+	public void setUsuario(UsuarioDTO usuarioDto) {
+		this.dto = usuarioDto;
+		asignarDatosForm();
 	}
 
-	private void asignarDatosEntidad() {
+	protected boolean asignarDatosEntidad() {
 		try {
-			usuarioDto = new UsuarioDTO(usuarioDto != null ? usuarioDto.getCodigo() : null, 
+			checkFields();
+			UsuarioDTO usuarioDto = (UsuarioDTO) dto;
+			dto = new UsuarioDTO(usuarioDto != null ? usuarioDto.getCodigo() : null, 
 									   new CredentialsDTO(txtNombreUsuario.getText(), txtPassword.getText()),
 									   UsuarioTipo.valueOf(String.valueOf(txtTipo.getSelectedItem())), 
 									   DateUtil.getDateFormat().parse(txtFechaNacimiento.getJFormattedTextField().getText()), 
@@ -249,14 +219,19 @@ public class UsuarioPopup extends JDialog {
 									   new DireccionDTO(txtCalle.getText(), Integer.valueOf(txtNumero.getText()), txtLocalidad.getText()), 
 									   Long.valueOf(txtDNI.getText()), 
 									   txtMail.getText());
+			return true;
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (ParseException e) {
 			e.printStackTrace();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(contentPanel, e.getMessage(), "DATOS INCORRECTOS", JOptionPane.ERROR_MESSAGE);
 		}
+		return false;
 	}
 	
-	private void asignarDatosForm(){
+	protected void asignarDatosForm(){
+		UsuarioDTO usuarioDto = (UsuarioDTO) dto;
 		txtNombreUsuario.setText(String.valueOf(usuarioDto.getCredentialsDto().getUsername()));
 		txtPassword.setText(String.valueOf(usuarioDto.getCredentialsDto().getPassword()));
 		txtTipo.setToolTipText(usuarioDto.getTipoUsuario().name());
@@ -269,13 +244,11 @@ public class UsuarioPopup extends JDialog {
 		txtNumero.setText(String.valueOf(usuarioDto.getDireccion().getNumero()));
 		txtLocalidad.setText(usuarioDto.getDireccion().getLocalidad());
 	}
-	
-	public void setUsuario(UsuarioDTO usuarioDto) {
-		this.usuarioDto = usuarioDto;
-		asignarDatosForm();
+
+	@Override
+	protected void checkFields() throws Exception {
+		// TODO Auto-generated method stub
+		
 	}
 
-	public ModalResult getModalResult() {
-		return modalResult;
-	}
 }

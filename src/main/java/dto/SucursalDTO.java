@@ -1,6 +1,8 @@
 package main.java.dto;
 
-public class SucursalDTO {
+import main.java.Interface.IDto;
+
+public class SucursalDTO implements IDto {
 
 	private String codigo;
 	private DireccionDTO direccion;

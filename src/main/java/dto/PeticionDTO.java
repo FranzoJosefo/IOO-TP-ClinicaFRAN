@@ -3,9 +3,10 @@ package main.java.dto;
 import java.util.Date;
 import java.util.List;
 
+import main.java.Interface.IDto;
 import main.java.enumeration.ObraSocial;
 
-public class PeticionDTO {
+public class PeticionDTO implements IDto {
 
 	private String codigo;
 	private String pacienteCodigo;

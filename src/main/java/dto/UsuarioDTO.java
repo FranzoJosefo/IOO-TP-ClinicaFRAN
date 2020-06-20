@@ -2,9 +2,10 @@ package main.java.dto;
 
 import java.util.Date;
 
+import main.java.Interface.IDto;
 import main.java.enumeration.UsuarioTipo;
 
-public class UsuarioDTO {
+public class UsuarioDTO implements IDto {
 
 	private String codigo;
 	private CredentialsDTO credentials;

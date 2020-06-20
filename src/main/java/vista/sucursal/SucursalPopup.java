@@ -1,49 +1,35 @@
 package main.java.vista.sucursal;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.EmptyBorder;
 
 import main.java.controller.UsuarioController;
 import main.java.dto.DireccionDTO;
 import main.java.dto.SucursalDTO;
 import main.java.entity.Usuario;
-import main.java.vista.ModalResult;
+import main.java.vista.IPopup;
 import main.java.vista.util.ComboBoxItem;
 
-public class SucursalPopup extends JDialog {
-
-	private final JPanel contentPanel = new JPanel();
+public class SucursalPopup extends IPopup {
 	
 	private JComboBox<ComboBoxItem> txtResponsable;
 	private JTextField txtCalle;
 	private JTextField txtNumero;
 	private JTextField txtLocalidad;
 	
-	private SucursalDTO sucursalDto; 
-	private ModalResult modalResult;
+	public SucursalPopup(JFrame frame) {
+		super(frame, "Sucursal", 350, 250);
+		setLocationRelativeTo(frame);
+		inicializarControles();
+	}
 	
-	private void inicializarControles() {
-		
-		setBounds(100, 100, 350, 250);
-		
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-	
+	protected void inicializarControles() {	
 		
 		JLabel lblResponsable = new JLabel("Responsable");
 		txtResponsable = buildLaboratoristasComboBox();
@@ -100,58 +86,38 @@ public class SucursalPopup extends JDialog {
 					.addPreferredGap(ComponentPlacement.RELATED)						
 					.addContainerGap(60, Short.MAX_VALUE))
 		);
+		
 		contentPanel.setLayout(gl_contentPanel);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						asignarDatosEntidad();
-						modalResult = ModalResult.OK;
-						dispose();
-					}
-				});
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						modalResult = ModalResult.CANCELL;
-						dispose();
-					}
-				});
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
-		}
 		
 	}
 	
-	public SucursalPopup(JFrame frame) {
-		super(frame, "Sucursal", true);
-		setLocationRelativeTo(frame);
-		inicializarControles();
-	}
-
 	public SucursalDTO getSucursal() {
-		return sucursalDto;
-	}
-
-	private void asignarDatosEntidad() {
-		sucursalDto = new SucursalDTO(sucursalDto != null ? sucursalDto.getCodigo() : null, 
-								   new DireccionDTO(txtCalle.getText(), Integer.valueOf(txtNumero.getText()), txtLocalidad.getText()),
-								   ((ComboBoxItem)txtResponsable.getSelectedItem()).getKey()); 
+		return (SucursalDTO) dto;
 	}
 	
-	private void asignarDatosForm() {
+	public void setSucursal(SucursalDTO sucursalDto) {
+		dto = sucursalDto;
+		asignarDatosForm();
+	}
+
+	protected boolean asignarDatosEntidad() {
+		try {
+			checkFields();
+			SucursalDTO sucursalDto = (SucursalDTO) dto;
+			dto = new SucursalDTO(sucursalDto != null ? sucursalDto.getCodigo() : null, 
+									   new DireccionDTO(txtCalle.getText(), Integer.valueOf(txtNumero.getText()), txtLocalidad.getText()),
+									   ((ComboBoxItem)txtResponsable.getSelectedItem()).getKey()); 
+			return true;
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(contentPanel, e.getMessage(), "DATOS INCORRECTOS", JOptionPane.ERROR_MESSAGE);
+		}
+		return false;
+	}
+	
+	protected void asignarDatosForm() {
 		Usuario uLab;
 		try {
+			SucursalDTO sucursalDto = (SucursalDTO) dto;
 			uLab = UsuarioController.INSTANCE.getUsuario(sucursalDto.getResponsableCodigo());
 			txtResponsable.setSelectedItem(getValueFromCombo(uLab.getCodigo()));
 			txtCalle.setText(sucursalDto.getDireccion().getCalle());
@@ -160,15 +126,6 @@ public class SucursalPopup extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public void setSucursal(SucursalDTO sucursalDto) {
-		this.sucursalDto = sucursalDto;
-		asignarDatosForm();
-	}
-
-	public ModalResult getModalResult() {
-		return modalResult;
 	}
 	
 	private ComboBoxItem getValueFromCombo(String codigo) {
@@ -186,7 +143,12 @@ public class SucursalPopup extends JDialog {
 				.stream()
 				.map(uLab -> new ComboBoxItem(String.format("%s %s", uLab.getApellido(), uLab.getNombre()), uLab.getCodigo()))
 				.forEach(comboItem -> txtCombo.addItem(comboItem));
-		return txtCombo;
-				
+		return txtCombo;		
 	}
+
+	protected void checkFields() throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

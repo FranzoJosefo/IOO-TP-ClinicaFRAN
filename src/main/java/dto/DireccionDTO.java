@@ -1,6 +1,8 @@
 package main.java.dto;
 
-public class DireccionDTO {
+import main.java.Interface.IDto;
+
+public class DireccionDTO implements IDto {
 
 	private String calle;
 	private int numero;

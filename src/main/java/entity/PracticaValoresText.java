@@ -1,12 +1,13 @@
 package main.java.entity;
 
+import java.util.HashMap;
 import java.util.Map;
 
-import main.java.Interface.PracticaValores;
+import main.java.Interface.IPracticaValores;
 
-public class PracticaValoresText implements PracticaValores {
+public class PracticaValoresText implements IPracticaValores {
 
-	Map<String, String> valoresPosibles;
+	Map<String, String> valoresPosibles = new HashMap<String, String>();
 	
 	public PracticaValoresText(Map<String, String> valoresPosibles) {
 		this.valoresPosibles = valoresPosibles;
@@ -22,7 +23,7 @@ public class PracticaValoresText implements PracticaValores {
 	}
 
 	@Override
-	public Map<String, String> toMap() {
+	public Map<String, String> toDto() {
 		return valoresPosibles;
 	}
 	

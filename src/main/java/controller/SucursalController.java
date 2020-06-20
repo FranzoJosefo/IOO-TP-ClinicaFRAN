@@ -3,6 +3,7 @@ package main.java.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import main.java.Interface.IDto;
 import main.java.dto.SucursalDTO;
 import main.java.entity.Sucursal;
 import main.java.enumeration.DataFilesNames;
@@ -82,7 +83,7 @@ public enum SucursalController {
 		ApiService.grabar(getAllSucursalesDTO(), DataFilesNames.FILE_SUCURSALES.getName());
 	}
 	
-	public List<SucursalDTO> getAllSucursalesDTO() {
+	public List<IDto> getAllSucursalesDTO() {
 		return sucursales.stream()
 				.map(Sucursal::toDTO)
 				.collect(Collectors.toList());

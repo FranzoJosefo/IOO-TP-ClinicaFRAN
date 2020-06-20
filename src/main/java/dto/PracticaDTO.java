@@ -2,9 +2,10 @@ package main.java.dto;
 
 import java.util.Map;
 
+import main.java.Interface.IDto;
 import main.java.enumeration.PracticaValoresTipo;
 
-public class PracticaDTO {
+public class PracticaDTO implements IDto {
 
 	private String codigo;
 	private String nombre;

@@ -1,6 +1,6 @@
 package main.java.entity;
 
-import main.java.Interface.PracticaValores;
+import main.java.Interface.IPracticaValores;
 import main.java.dto.PracticaDTO;
 import main.java.enumeration.PracticaValoresTipo;
 import main.java.factory.PracticaValoresFactory;
@@ -13,7 +13,7 @@ public class Practica {
 	private int horasEsperaResultado;
 	private boolean habilitada;
 	private PracticaValoresTipo tipo;
-	private PracticaValores valoresPosibles; 
+	private IPracticaValores valoresPosibles; 
 
 	public Practica(PracticaDTO practicaDto) {
 		this.codigo = practicaDto.getCodigo();
@@ -82,15 +82,15 @@ public class Practica {
 		this.tipo = tipo;
 	}
 
-	public PracticaValores getValoresPosibles() {
+	public IPracticaValores getValoresPosibles() {
 		return valoresPosibles;
 	}
 
-	public void setValoresPosibles(PracticaValores valoresPosibles) {
+	public void setValoresPosibles(IPracticaValores valoresPosibles) {
 		this.valoresPosibles = valoresPosibles;
 	}
 	
 	public PracticaDTO toDto() {
-		return new PracticaDTO(codigo, nombre, grupo, horasEsperaResultado, habilitada, tipo, valoresPosibles.toMap());
+		return new PracticaDTO(codigo, nombre, grupo, horasEsperaResultado, habilitada, tipo, valoresPosibles.toDto());
 	}
 }

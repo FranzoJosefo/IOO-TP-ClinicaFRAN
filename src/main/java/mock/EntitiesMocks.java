@@ -4,13 +4,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import main.java.dto.CredentialsDTO;
 import main.java.dto.DireccionDTO;
 import main.java.dto.PacienteDTO;
+import main.java.dto.PracticaDTO;
 import main.java.dto.SucursalDTO;
 import main.java.dto.UsuarioDTO;
+import main.java.enumeration.PracticaValores;
+import main.java.enumeration.PracticaValoresTipo;
 import main.java.enumeration.Sexo;
 import main.java.enumeration.UsuarioTipo;
 
@@ -58,4 +63,22 @@ public class EntitiesMocks {
 		sucursalesMock.add(new SucursalDTO("SUC1_TEST", new DireccionDTO("Libertador", 1503, "Olivos"), "USU3_TEST"));
 		return sucursalesMock;
 	}
+	
+	public static List<PracticaDTO> getPracticasMock() {
+		List<PracticaDTO> practicasMock = new ArrayList();
+		practicasMock.add(new PracticaDTO("PRA1_TEST", "Recuento leucocitos", "Analisis de sangre", 96, true, PracticaValoresTipo.RANGE, buildPracticaValoresMap("100-150", "150-200", "200-300")));
+		practicasMock.add(new PracticaDTO("PRA2_TEST", "Estudio HIV", null, 180, true, PracticaValoresTipo.WORD, buildPracticaValoresMap("negativo", "N/A", "positivo")));
+		practicasMock.add(new PracticaDTO("PRA3_TEST", "Medicion glucosa", null, 120, true, PracticaValoresTipo.RANGE, buildPracticaValoresMap("0-100", "100-150", "150-300")));
+		practicasMock.add(new PracticaDTO("PRA4_TEST", "Orina", null, 48, false, PracticaValoresTipo.WORD, buildPracticaValoresMap("amarilla", "verde", "roja")));
+		return practicasMock;
+	}
+	
+	private static Map<String, String> buildPracticaValoresMap(String valoresNormales, String valoresCriticos, String valoresReservados){
+		Map<String, String> map = new HashMap<String, String>(); 
+		map.put(PracticaValores.NORMALES.name(), valoresNormales);
+		map.put(PracticaValores.CRITICOS.name(), valoresCriticos);
+		map.put(PracticaValores.RESERVADOS.name(), valoresReservados);
+		return map;
+	}
+	
 }

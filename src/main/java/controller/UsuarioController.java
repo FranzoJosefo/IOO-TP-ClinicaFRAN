@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import main.java.Interface.IDto;
 import main.java.dto.CredentialsDTO;
 import main.java.dto.UsuarioDTO;
 import main.java.entity.Credentials;
@@ -98,7 +99,7 @@ public enum UsuarioController {
 		ApiService.grabar(getAllUsuariosDTO(), DataFilesNames.FILE_USUARIOS.getName());
 	}
 	
-	public List<UsuarioDTO> getAllUsuariosDTO() {
+	public List<IDto> getAllUsuariosDTO() {
 		return usuarios.stream()
 				.map(Usuario::toDto)
 				.collect(Collectors.toList());

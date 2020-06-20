@@ -3,10 +3,12 @@ package main.java.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import main.java.Interface.IDto;
 import main.java.dto.PracticaDTO;
 import main.java.entity.Practica;
 import main.java.enumeration.DataFilesNames;
 import main.java.enumeration.PrefijoCodigo;
+import main.java.mock.EntitiesMocks;
 import main.java.rest.ApiService;
 import main.java.util.CodigoGenerator;
 
@@ -19,6 +21,7 @@ public enum PracticaController {
 	
 	PracticaController() {
 		practicasCreadas = 0;
+		ApiService.grabar(EntitiesMocks.getPracticasMock(), DataFilesNames.FILE_PRACTICAS.getName());
 		practicas = getPracticasFromDataBase();
 	}
 	
@@ -70,7 +73,7 @@ public enum PracticaController {
 		ApiService.grabar(getAllPracticaDTO(), DataFilesNames.FILE_PRACTICAS.getName());
 	}
 	
-	public List<PracticaDTO> getAllPracticaDTO() {
+	public List<IDto> getAllPracticaDTO() {
 		return practicas.stream()
 				.map(Practica::toDto)
 				.collect(Collectors.toList());

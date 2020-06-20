@@ -3,6 +3,7 @@ package main.java.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import main.java.Interface.IDto;
 import main.java.dto.PacienteDTO;
 import main.java.entity.Paciente;
 import main.java.enumeration.DataFilesNames;
@@ -52,7 +53,7 @@ public enum PacienteController {
 		updatePacientesDataBase();
 	}
 	
-	public List<PacienteDTO> getAllPacientesDTO() {
+	public List<IDto> getAllPacientesDTO() {
 		return pacientes.stream()
 				.map(Paciente::toDto)
 				.collect(Collectors.toList());

@@ -1,34 +1,25 @@
 package main.java.vista.paciente;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.NumberFormat;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.EmptyBorder;
 import javax.swing.text.NumberFormatter;
 
 import main.java.dto.DireccionDTO;
 import main.java.dto.PacienteDTO;
 import main.java.enumeration.Sexo;
-import main.java.vista.ModalResult;
+import main.java.vista.IPopup;
 
-public class PacientePopup extends JDialog {
-
-	private final JPanel contentPanel = new JPanel();
+public class PacientePopup extends IPopup {
 	
 	private JFormattedTextField txtDNI;
 	private JTextField txtApellido;
@@ -40,17 +31,13 @@ public class PacientePopup extends JDialog {
 	private JTextField txtNumero;
 	private JTextField txtLocalidad;
 	
-	private PacienteDTO paciente; 
-	private ModalResult modalResult;
+	public PacientePopup(JFrame frame) {
+		super(frame, "Paciente", 400, 370);
+		setLocationRelativeTo(frame);
+		inicializarControles();
+	}
 	
-	private void inicializarControles() {
-		
-		setBounds(100, 100, 400, 370);
-		
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-	
+	protected void inicializarControles() {
 		
 		JLabel lblDni = new JLabel("DNI");
 		txtDNI = new JFormattedTextField();
@@ -167,78 +154,56 @@ public class PacientePopup extends JDialog {
 
 					.addContainerGap(60, Short.MAX_VALUE))
 		);
-		contentPanel.setLayout(gl_contentPanel);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						asignarDatosEntidad();
-						modalResult = ModalResult.OK;
-						dispose();
-					}
-				});
-				okButton.setActionCommand("OK");
-				buttonPane.add(okButton);
-				getRootPane().setDefaultButton(okButton);
-			}
-			{
-				JButton cancelButton = new JButton("Cancel");
-				cancelButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent arg0) {
-						modalResult = ModalResult.CANCELL;
-						dispose();
-					}
-				});
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-			}
-		}
 		
-	}
-	
-	public PacientePopup(JFrame frame) {
-		super(frame, "Paciente", true);
-		setLocationRelativeTo(frame);
-		inicializarControles();
+		contentPanel.setLayout(gl_contentPanel);
+				
 	}
 
 	public PacienteDTO getPaciente() {
-		return paciente;
-	}
-
-	private void asignarDatosEntidad() {
-		paciente = new PacienteDTO(paciente != null ? paciente.getCodigo() : null, 
-								   Sexo.valueOf(String.valueOf(txtSexo.getSelectedItem())), 
-								   Long.valueOf(txtEdad.getText()), 
-								   txtApellido.getText(), 
-								   txtNombre.getText(), 
-								   new DireccionDTO(txtCalle.getText(), Integer.valueOf(txtNumero.getText()), txtLocalidad.getText()), 
-								   Long.valueOf(txtDNI.getText()), 
-								   txtMail.getText());
-	}
-	
-	private void asignarDatosForm(){
-		txtDNI.setText(String.valueOf(paciente.getDni()));
-		txtApellido.setText(paciente.getApellido());
-		txtNombre.setText(paciente.getNombre());
-		txtSexo.setToolTipText(paciente.getSexo().name());
-		txtEdad.setValue(paciente.getEdad());
-		txtMail.setText(paciente.getMail());
-		txtCalle.setText(paciente.getDireccion().getCalle());
-		txtNumero.setText(String.valueOf(paciente.getDireccion().getNumero()));
-		txtLocalidad.setText(paciente.getDireccion().getLocalidad());
+		return (PacienteDTO) dto;
 	}
 	
 	public void setPaciente(PacienteDTO paciente) {
-		this.paciente = paciente;
+		dto = paciente;
 		asignarDatosForm();
 	}
 
-	public ModalResult getModalResult() {
-		return modalResult;
+	protected boolean asignarDatosEntidad() {
+		try {
+			checkFields();
+			PacienteDTO pacienteDto = (PacienteDTO) dto;
+			dto = new PacienteDTO(pacienteDto != null ? pacienteDto.getCodigo() : null, 
+									   Sexo.valueOf(String.valueOf(txtSexo.getSelectedItem())), 
+									   Long.valueOf(txtEdad.getText()), 
+									   txtApellido.getText(), 
+									   txtNombre.getText(), 
+									   new DireccionDTO(txtCalle.getText(), Integer.valueOf(txtNumero.getText()), txtLocalidad.getText()), 
+									   Long.valueOf(txtDNI.getText()), 
+									   txtMail.getText());
+			return true;
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(contentPanel, e.getMessage(), "DATOS INCORRECTOS", JOptionPane.ERROR_MESSAGE);	
+		}
+		return false;
 	}
+	
+	protected void asignarDatosForm(){
+		PacienteDTO pacienteDto = (PacienteDTO) dto;
+		txtDNI.setText(String.valueOf(pacienteDto.getDni()));
+		txtApellido.setText(pacienteDto.getApellido());
+		txtNombre.setText(pacienteDto.getNombre());
+		txtSexo.setToolTipText(pacienteDto.getSexo().name());
+		txtEdad.setValue(pacienteDto.getEdad());
+		txtMail.setText(pacienteDto.getMail());
+		txtCalle.setText(pacienteDto.getDireccion().getCalle());
+		txtNumero.setText(String.valueOf(pacienteDto.getDireccion().getNumero()));
+		txtLocalidad.setText(pacienteDto.getDireccion().getLocalidad());
+	}
+
+	@Override
+	protected void checkFields() throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

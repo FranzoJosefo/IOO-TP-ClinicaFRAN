@@ -5,15 +5,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import main.java.Interface.PracticaValores;
+import main.java.Interface.IPracticaValores;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class PracticaValoresRange implements PracticaValores {
+public class PracticaValoresRange implements IPracticaValores {
 
-	Map<String, ValueRange> valoresPosibles;
+	Map<String, ValueRange> valoresPosibles = new HashMap<String, ValueRange>();
 	
 	private static int MIN = 0;
 	private static int MAX = 1;
@@ -26,7 +26,7 @@ public class PracticaValoresRange implements PracticaValores {
 	}
 	
 	private ValueRange getRange(String limitesToFormat) {
-		List<String> limites = Arrays.asList(limitesToFormat.split(","));
+		List<String> limites = Arrays.asList(limitesToFormat.split("-"));
 		Long limiteMinimo = Long.valueOf(limites.get(MIN));
 		Long limiteMaximo = Long.valueOf(limites.get(MAX));
 		return ValueRange.of(limiteMinimo, limiteMaximo);
@@ -42,10 +42,11 @@ public class PracticaValoresRange implements PracticaValores {
 	}
 
 	@Override
-	public HashMap<String, String> toMap() {
-		
-		// TODO devolver el mapa como viene en el DTO
-		return null;
+	public HashMap<String, String> toDto() {
+		return (HashMap<String, String>) valoresPosibles.entrySet()
+				.stream()
+				.map(entry -> new SimpleEntry<String, String>(entry.getKey(), String.format("%s-%s", entry.getValue().getMinimum(), entry.getValue().getMaximum())))
+				.collect(Collectors.toMap(SimpleEntry::getKey, SimpleEntry::getValue));
 	}
 	
 }
