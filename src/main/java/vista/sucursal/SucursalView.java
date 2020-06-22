@@ -15,7 +15,7 @@ public class SucursalView extends IView {
 			public void run() {
 				try {
 					SucursalView window = new SucursalView();
-					window.frame.setVisible(true);
+					window.setFrameVisible();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -25,7 +25,7 @@ public class SucursalView extends IView {
 	
 	public SucursalView() {
 		entidadTable = new SucursalTable();
-		init("Sucursales");
+		init("Sucursales", 500, 350);
 	}
 	
 	protected void agregarRegistro() {

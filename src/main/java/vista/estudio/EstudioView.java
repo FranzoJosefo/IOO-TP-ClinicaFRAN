@@ -1,40 +1,25 @@
-package main.java.vista.peticion;
+package main.java.vista.estudio;
 
-import java.awt.EventQueue;
-import javax.swing.JDialog;
-
-import main.java.controller.PeticionController;
+import main.java.dto.PeticionDTO;
 import main.java.vista.IView;
-import main.java.vista.util.ModalResult;
 
-public class PeticionView extends IView {
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PeticionView window = new PeticionView();
-					window.setFrameVisible();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+public class EstudioView extends IView {
 	
-	public PeticionView() {
-		entidadTable = new PeticionTable();
-		init("Peticiones", 1000, 350);
+	public EstudioView(PeticionDTO peticionDto) {
+		entidadTable = new EstudioTable(peticionDto);
+		init("Estudios", 400, 250);
 	}
 	
 	protected void agregarRegistro() {
 		try {
-			PeticionPopup dialog = new PeticionPopup(frame);
+			/*
+			EstudioPopup dialog = new EstudioPopup(frame);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 			if (dialog.getModalResult() == ModalResult.OK)
 				PeticionController.INSTANCE.createPeticion(dialog.getPeticion());
 				entidadTable.agregar(dialog.getPeticion());
+			*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}				
@@ -42,7 +27,8 @@ public class PeticionView extends IView {
 	
 	protected void modificarRegistro() {
 		try {
-			PeticionPopup dialog = new PeticionPopup(frame);
+			/*
+			EstudioPopup dialog = new EstudioPopup(frame);
 			int selectedRow = table.getSelectedRow();
 			String peticionCodigo = String.valueOf(entidadTable.getValueAt(selectedRow, CODIGO_COLUMN));
 			dialog.setPeticion(PeticionController.INSTANCE.getPeticion(peticionCodigo).toDto());
@@ -51,6 +37,7 @@ public class PeticionView extends IView {
 			if (dialog.getModalResult() == ModalResult.OK)
 				PeticionController.INSTANCE.updatePeticion(dialog.getPeticion());
 				entidadTable.actualizar(dialog.getPeticion(), selectedRow);
+			*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}			
@@ -58,10 +45,15 @@ public class PeticionView extends IView {
 	
 	protected void eliminarRegistro() {
 		try {
+			/*
 			int selectedRow = table.getSelectedRow();
 			String peticionCodigo = String.valueOf(entidadTable.getValueAt(selectedRow, CODIGO_COLUMN));
-			PeticionController.INSTANCE.deletePeticion(peticionCodigo);
+			dialog.setPeticion(PeticionController.INSTANCE.getPeticion(peticionCodigo).toDto());
+			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setVisible(true);
+			PeticionController.INSTANCE.updatePeticion(peticionCodigo);
 			entidadTable.eliminar(selectedRow);
+			*/
 		} catch (Exception e) {
 			e.printStackTrace();
 		}			

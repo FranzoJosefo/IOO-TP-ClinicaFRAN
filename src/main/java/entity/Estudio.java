@@ -1,14 +1,16 @@
 package main.java.entity;
 
 import main.java.controller.PracticaController;
+import main.java.dto.EstudioDTO;
 
 public class Estudio {
 	
 	private String practicaCodigo;
 	private String resultado;
 	
-	public Estudio(String practicaCodigo) {
+	public Estudio(String practicaCodigo, String resultado) {
 		this.practicaCodigo = practicaCodigo;
+		this.resultado = resultado;
 	}
 	
 	public boolean checkResultadoValido(String resultado) throws Exception {
@@ -34,9 +36,12 @@ public class Estudio {
 		return resultado;
 	}
 
-
 	public void setResultado(String resultado) {
 		this.resultado = resultado;
+	}
+	
+	public EstudioDTO toDTO() {
+		return new EstudioDTO(practicaCodigo, resultado);
 	}
 	
 }

@@ -2,7 +2,6 @@ package main.java.vista;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -13,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,13 +20,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
-import javax.swing.UIManager;
-import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumnModel;
 
 public abstract class IView {
 	
@@ -42,7 +39,11 @@ public abstract class IView {
 	
 	protected abstract void eliminarRegistro();
 	
-	protected void init(String name) {
+	public void setFrameVisible() {
+		frame.setVisible(true);
+	}
+	
+	protected void init(String name, int width, int height) {
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
@@ -50,7 +51,7 @@ public abstract class IView {
 		}				
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 900, 350);
+		frame.setBounds(0, 0, width, height);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		JPanel panel = new JPanel();
@@ -113,7 +114,7 @@ public abstract class IView {
 		frame.getContentPane().add(panel_1, BorderLayout.NORTH);
 		panel_1.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JLabel lblNewLabel = new JLabel("Practicas");
+		JLabel lblNewLabel = new JLabel(name);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 		panel_1.add(lblNewLabel);
 		
@@ -132,21 +133,6 @@ public abstract class IView {
 		table.setAutoCreateRowSorter(true);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		scrollPane.setViewportView(table);
-	}
-	
-	public void resizeColumnWidth(JTable table) {
-	    final TableColumnModel columnModel = table.getColumnModel();
-	    for (int column = 0; column < table.getColumnCount(); column++) {
-	        int width = 15; 
-	        for (int row = 0; row < table.getRowCount(); row++) {
-	            TableCellRenderer renderer = table.getCellRenderer(row, column);
-	            Component comp = table.prepareRenderer(renderer, row, column);
-	            width = Math.max(comp.getPreferredSize().width +1 , width);
-	        }
-	        if(width > 300)
-	            width=300;
-	        columnModel.getColumn(column).setPreferredWidth(width);
-	    }
 	}
 	
 }

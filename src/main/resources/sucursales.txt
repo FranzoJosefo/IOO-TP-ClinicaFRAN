@@ -1,1 +1,1 @@
-[{"codigo":"SUC1_TEST","direccion":{"calle":"Libertador","numero":1503,"localidad":"Olivos"},"responsableCodigo":"USU3_TEST"}]
+[{"codigo":"SUC1_TEST","nombre":"Sucursal 1","direccion":{"calle":"Libertador","numero":1503,"localidad":"Olivos"},"responsableCodigo":"USU3_TEST"}]

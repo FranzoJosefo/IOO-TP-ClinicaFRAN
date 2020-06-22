@@ -5,16 +5,20 @@ import main.java.dto.SucursalDTO;
 public class Sucursal {
 
 	private String codigo;
+	private String nombre;
+
 	private Direccion direccion;
 	private String responsableCodigo;
 
 	public Sucursal(SucursalDTO sucursalDto) {
 		this.codigo = sucursalDto.getCodigo();
+		this.nombre = sucursalDto.getNombre();
 		this.direccion = new Direccion(sucursalDto.getDireccion());
 		this.responsableCodigo = sucursalDto.getResponsableCodigo();
 	}
 	
 	public void update(SucursalDTO sucursalDto) {
+		this.setNombre(sucursalDto.getNombre());
 		this.setResponsableCodigo(sucursalDto.getResponsableCodigo());
 		this.setDireccion(new Direccion(sucursalDto.getDireccion()));
 	}
@@ -25,6 +29,14 @@ public class Sucursal {
 
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
+	}
+	
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public Direccion getDireccion() {
@@ -44,6 +56,6 @@ public class Sucursal {
 	}
 
 	public SucursalDTO toDTO() {
-		return new SucursalDTO(codigo, direccion.toDTO(), responsableCodigo);
+		return new SucursalDTO(codigo, nombre, direccion.toDTO(), responsableCodigo);
 	}
 }

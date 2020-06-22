@@ -12,17 +12,17 @@ public class PeticionDTO implements IDto {
 	private String pacienteCodigo;
 	private ObraSocial obraSocial;
 	private Date fechaDeCarga;
-	private List<String> practicaCodigos;
+	private List<EstudioDTO> estudios;
 	private Date fechaDeEntrega;
 	private String codigoSucursal;
 
 	public PeticionDTO(String codigo, String pacienteCodigo, ObraSocial obraSocial, Date fechaDeCarga,
-			List<String> practicaCodigos, Date fechaDeEntrega, String codigoSucursal) {
+			List<EstudioDTO> estudios, Date fechaDeEntrega, String codigoSucursal) {
 		this.codigo = codigo;
 		this.pacienteCodigo = pacienteCodigo;
 		this.obraSocial = obraSocial;
 		this.fechaDeCarga = fechaDeCarga;
-		this.practicaCodigos = practicaCodigos;
+		this.estudios = estudios;
 		this.fechaDeEntrega = fechaDeEntrega;
 		this.codigoSucursal = codigoSucursal;
 	}
@@ -59,12 +59,12 @@ public class PeticionDTO implements IDto {
 		this.fechaDeCarga = fechaDeCarga;
 	}
 
-	public List<String> getPracticaCodigos() {
-		return practicaCodigos;
+	public List<EstudioDTO> getEstudios() {
+		return estudios;
 	}
 
-	public void setPracticaCodigos(List<String> practicaCodigos) {
-		this.practicaCodigos = practicaCodigos;
+	public void setEstudios(List<EstudioDTO> estudios) {
+		this.estudios = estudios;
 	}
 
 	public Date getFechaDeEntrega() {

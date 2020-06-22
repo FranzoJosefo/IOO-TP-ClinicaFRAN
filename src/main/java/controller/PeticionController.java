@@ -1,13 +1,17 @@
 package main.java.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import main.java.Interface.IDto;
 import main.java.dto.PeticionDTO;
 import main.java.entity.Estudio;
 import main.java.entity.Peticion;
+import main.java.enumeration.DataFilesNames;
 import main.java.enumeration.PrefijoCodigo;
+import main.java.mock.EntitiesMocks;
+import main.java.rest.ApiService;
 import main.java.util.CodigoGenerator;
 
 public enum PeticionController {
@@ -19,13 +23,8 @@ public enum PeticionController {
 	
 	PeticionController() {
 		peticionesCreadas = 0;
-		peticiones = new ArrayList();
-	}
-	
-	public void createPeticion(PeticionDTO peticionDto) {
-		peticionDto.setCodigo(generateCodigoPeticion());
-		Peticion newPeticion = new Peticion(peticionDto);
-		peticiones.add(newPeticion);
+		ApiService.grabar(EntitiesMocks.getPeticionesMock(), DataFilesNames.FILE_PETICIONES.getName());
+		peticiones = getPeticionesFromDataBase();
 	}
 	
 	public Peticion getPeticion(String codigoPeticion) throws Exception {
@@ -33,6 +32,24 @@ public enum PeticionController {
 		.filter(p -> p.getCodigo().equals(codigoPeticion))
 		.findFirst()
 		.orElseThrow(() -> new Exception("No se ha encontrado la peticion"));
+	}
+	
+	public void createPeticion(PeticionDTO peticionDto) {
+		peticionDto.setCodigo(generateCodigoPeticion());
+		Peticion newPeticion = new Peticion(peticionDto);
+		peticiones.add(newPeticion);
+		updatePeticionesDataBase();
+	}
+	
+	public void updatePeticion(PeticionDTO peticionDto) throws Exception {
+		Peticion existingPeticion = getPeticion(peticionDto.getCodigo());
+		existingPeticion.update(peticionDto);
+		updatePeticionesDataBase();
+	}
+	
+	public void deletePeticion(String codigoPeticion) {
+		peticiones.removeIf(p -> p.getCodigo().equals(codigoPeticion));
+		updatePeticionesDataBase();
 	}
 	
 	public void cargarResultado(String codigoPeticion, String codigoPractica, String resultado) throws Exception {
@@ -49,10 +66,6 @@ public enum PeticionController {
 		} else {
 			estudio.get().setResultado(resultado);
 		}
-	}
-	
-	public void deletePeticion(String codigoPeticion) {
-		peticiones.removeIf(p -> p.getCodigo().equals(codigoPeticion));
 	}
 	
 	public boolean hasPeticionesWithEstudiosTerminados(String codigoPaciente) {
@@ -90,9 +103,27 @@ public enum PeticionController {
 		.forEach(p -> p.setCodigoSucursal(newSucursal));
 	}
 	
-	// se pide listar todas las peticiones con valores criticos
-	public void getAllPeticiones() {
-		
+	private List<Peticion> getPeticionesFromDataBase() {
+		List<PeticionDTO> dtos = ApiService.leer(PeticionDTO.class, DataFilesNames.FILE_PETICIONES.getName());
+		return dtos.stream()
+				.map(Peticion::new)
+				.collect(Collectors.toList());				
+	}
+
+	private void updatePeticionesDataBase() {
+		ApiService.grabar(getAllPeticionesDTO(), DataFilesNames.FILE_PETICIONES.getName());
+	}
+	
+	public List<IDto> getAllPeticionesDTO() {
+		return peticiones.stream()
+				.map(Peticion::toDto)
+				.collect(Collectors.toList());
+	}
+	
+	public List<IDto> getAllEstudiosDTO(PeticionDTO peticionDto) {
+		return peticionDto.getEstudios()
+				.stream()
+				.collect(Collectors.toList());
 	}
 	
 	private String generateCodigoPeticion() {

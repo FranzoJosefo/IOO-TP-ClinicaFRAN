@@ -15,7 +15,7 @@ public class PacienteView extends IView {
 			public void run() {
 				try {
 					PacienteView window = new PacienteView();
-					window.frame.setVisible(true);
+					window.setFrameVisible();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -25,7 +25,7 @@ public class PacienteView extends IView {
 	
 	public PacienteView() {
 		entidadTable = new PacienteTable();
-		init("Pacientes");
+		init("Pacientes", 1000, 350);
 	}
 	
 	protected void agregarRegistro() {

@@ -18,6 +18,7 @@ import main.java.vista.util.ComboBoxItem;
 
 public class SucursalPopup extends IPopup {
 	
+	private JTextField txtNombre;
 	private JComboBox<ComboBoxItem> txtResponsable;
 	private JTextField txtCalle;
 	private JTextField txtNumero;
@@ -30,6 +31,10 @@ public class SucursalPopup extends IPopup {
 	}
 	
 	protected void inicializarControles() {	
+		
+		JLabel lblNombre = new JLabel("Nombre");
+		txtNombre = new JTextField();
+		txtNombre.setColumns(10);
 		
 		JLabel lblResponsable = new JLabel("Responsable");
 		txtResponsable = buildLaboratoristasComboBox();
@@ -52,12 +57,14 @@ public class SucursalPopup extends IPopup {
 				.addGroup(gl_contentPanel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNombre)
 						.addComponent(lblResponsable)
 						.addComponent(lblCalle)
 						.addComponent(lblNumero)
 						.addComponent(lblLocalidad))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
 						.addComponent(txtResponsable, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
 						.addComponent(txtCalle, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
 						.addComponent(txtNumero, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
@@ -68,6 +75,10 @@ public class SucursalPopup extends IPopup {
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
 					.addContainerGap()
+					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNombre)
+						.addComponent(txtNombre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblResponsable)
 						.addComponent(txtResponsable, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -104,7 +115,8 @@ public class SucursalPopup extends IPopup {
 		try {
 			checkFields();
 			SucursalDTO sucursalDto = (SucursalDTO) dto;
-			dto = new SucursalDTO(sucursalDto != null ? sucursalDto.getCodigo() : null, 
+			dto = new SucursalDTO(sucursalDto != null ? sucursalDto.getCodigo() : null,
+									   txtNombre.getText(),
 									   new DireccionDTO(txtCalle.getText(), Integer.valueOf(txtNumero.getText()), txtLocalidad.getText()),
 									   ((ComboBoxItem)txtResponsable.getSelectedItem()).getKey()); 
 			return true;
@@ -119,6 +131,7 @@ public class SucursalPopup extends IPopup {
 		try {
 			SucursalDTO sucursalDto = (SucursalDTO) dto;
 			uLab = UsuarioController.INSTANCE.getUsuario(sucursalDto.getResponsableCodigo());
+			txtNombre.setText(sucursalDto.getNombre());
 			txtResponsable.setSelectedItem(getValueFromCombo(uLab.getCodigo()));
 			txtCalle.setText(sucursalDto.getDireccion().getCalle());
 			txtNumero.setText(String.valueOf(sucursalDto.getDireccion().getNumero()));
@@ -130,7 +143,7 @@ public class SucursalPopup extends IPopup {
 	
 	private ComboBoxItem getValueFromCombo(String codigo) {
 		for (int i = 0; i < txtResponsable.getItemCount(); i++) {
-			if(((ComboBoxItem)txtResponsable.getItemAt(i)).getKey().equals(codigo)) {
+			if(txtResponsable.getItemAt(i).getKey().equals(codigo)) {
 				return txtResponsable.getItemAt(i);
 			}
 		}

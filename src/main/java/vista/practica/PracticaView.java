@@ -14,7 +14,7 @@ public class PracticaView extends IView {
 			public void run() {
 				try {
 					PracticaView window = new PracticaView();
-					window.frame.setVisible(true);
+					window.setFrameVisible();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -24,7 +24,7 @@ public class PracticaView extends IView {
 	
 	public PracticaView() {
 		entidadTable = new PracticaTable();
-		init("Practicas");
+		init("Practicas", 1000, 350);
 	}
 	
 	protected void agregarRegistro() {

@@ -33,7 +33,7 @@ import main.java.dto.UsuarioDTO;
 import main.java.enumeration.UsuarioTipo;
 import main.java.util.DateUtil;
 import main.java.vista.IPopup;
-import main.java.vista.util.DateLabelFormatter;
+import main.java.vista.util.DatePicker;
 import main.java.vista.util.ModalResult;
 
 
@@ -85,12 +85,7 @@ public class UsuarioPopup extends IPopup {
 		txtTipo.setModel(new DefaultComboBoxModel<UsuarioTipo>(UsuarioTipo.values()));
 		
 		JLabel lblFechaNac = new JLabel("Fecha de nacimiento");
-		UtilDateModel model = new UtilDateModel();
-		DateLabelFormatter formatterFechaNac = new DateLabelFormatter();
-		Properties properties = new Properties();		
-		properties.put("text.today", "Today");
-	    JDatePanelImpl datePanel = new JDatePanelImpl(model, properties);
-	    txtFechaNacimiento = new JDatePickerImpl(datePanel, formatterFechaNac);
+	    txtFechaNacimiento = DatePicker.INSTANCE.getDatePicker();
 	    		
 		JLabel lblMail = new JLabel("Mail");
 		txtMail = new JTextField();

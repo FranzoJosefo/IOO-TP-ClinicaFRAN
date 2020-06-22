@@ -14,7 +14,7 @@ public class UsuarioView extends IView {
 			public void run() {
 				try {
 					UsuarioView window = new UsuarioView();
-					window.frame.setVisible(true);
+					window.setFrameVisible();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -24,7 +24,7 @@ public class UsuarioView extends IView {
 	
 	public UsuarioView() {
 		entidadTable = new UsuarioTable();
-		init("Usuarios");
+		init("Usuarios", 1200, 350);
 	}
 	
 	protected void agregarRegistro() {

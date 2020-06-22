@@ -7,8 +7,8 @@ import main.java.vista.ITable;
 public class SucursalTable extends ITable {
 
 	public SucursalTable() {
-		columnNames = new String[] { "Codigo", "Responsable", "Direccion"}; 
-		columnClasses = new Class[] { String.class, String.class, String.class}; 
+		columnNames = new String[] { "Codigo", "Nombre", "Responsable", "Direccion"}; 
+		columnClasses = new Class[] { String.class, String.class, String.class, String.class}; 
 		lista = SucursalController.INSTANCE.getAllSucursalesDTO();
 	}
     
@@ -17,8 +17,9 @@ public class SucursalTable extends ITable {
 		switch(columnIndex) 
 		{ 
 			case 0: return sucursalDto.getCodigo(); 
-			case 1: return sucursalDto.getResponsableCodigo();
-			case 2: return sucursalDto.getDireccion().toString();
+			case 1: return sucursalDto.getNombre(); 
+			case 2: return sucursalDto.getResponsableCodigo();
+			case 3: return sucursalDto.getDireccion().toString();
 			default: return null; 
 		}
 	}

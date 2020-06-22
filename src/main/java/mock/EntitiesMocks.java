@@ -10,16 +10,21 @@ import java.util.Map;
 
 import main.java.dto.CredentialsDTO;
 import main.java.dto.DireccionDTO;
+import main.java.dto.EstudioDTO;
 import main.java.dto.PacienteDTO;
+import main.java.dto.PeticionDTO;
 import main.java.dto.PracticaDTO;
 import main.java.dto.SucursalDTO;
 import main.java.dto.UsuarioDTO;
+import main.java.enumeration.ObraSocial;
 import main.java.enumeration.PracticaValores;
 import main.java.enumeration.PracticaValoresTipo;
 import main.java.enumeration.Sexo;
 import main.java.enumeration.UsuarioTipo;
 
 public class EntitiesMocks {
+	
+	static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	public static List<PacienteDTO> getPacientesMock() {
 		List<PacienteDTO> pacientesMock = new ArrayList();
@@ -38,7 +43,6 @@ public class EntitiesMocks {
 
 	public static List<UsuarioDTO> getUsuariosMock() {
 		List<UsuarioDTO> usuariosMock = new ArrayList();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		try {
 			usuariosMock.add(new UsuarioDTO("USU1_TEST", new CredentialsDTO("admin", "admin"),
 					UsuarioTipo.ADMINISTRADOR, sdf.parse("31/12/1998"), "Olivero", "Francisco",
@@ -60,7 +64,7 @@ public class EntitiesMocks {
 	
 	public static List<SucursalDTO> getSucursalesMock() {
 		List<SucursalDTO> sucursalesMock = new ArrayList();
-		sucursalesMock.add(new SucursalDTO("SUC1_TEST", new DireccionDTO("Libertador", 1503, "Olivos"), "USU3_TEST"));
+		sucursalesMock.add(new SucursalDTO("SUC1_TEST", "Sucursal 1", new DireccionDTO("Libertador", 1503, "Olivos"), "USU3_TEST"));
 		return sucursalesMock;
 	}
 	
@@ -79,6 +83,25 @@ public class EntitiesMocks {
 		map.put(PracticaValores.CRITICOS.name(), valoresCriticos);
 		map.put(PracticaValores.RESERVADOS.name(), valoresReservados);
 		return map;
+	}
+	
+	public static List<PeticionDTO> getPeticionesMock() {
+		List<PeticionDTO> peticionesMock = new ArrayList();
+		try {
+			peticionesMock.add(new PeticionDTO("PET1_TEST", "PAC1_TEST", ObraSocial.GALENO, sdf.parse("24/06/2020"), buildEstudios(), sdf.parse("01/08/2020"), "SUC1_TEST"));
+			peticionesMock.add(new PeticionDTO("PET2_TEST", "PAC2_TEST", ObraSocial.OSDE, sdf.parse("24/06/2020"), buildEstudios(), sdf.parse("01/08/2020"), "SUC1_TEST"));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return peticionesMock;
+	}
+	
+	private static List<EstudioDTO> buildEstudios() {
+		List<EstudioDTO> estudios = new ArrayList();
+		estudios.add(new EstudioDTO("PRA1_TEST", "50"));
+		estudios.add(new EstudioDTO("PRA2_TEST", "POSITIVO"));
+		estudios.add(new EstudioDTO("PRA3_TEST", "30"));
+		return estudios;
 	}
 	
 }

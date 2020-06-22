@@ -5,7 +5,8 @@ public enum DataFilesNames {
 	FILE_PACIENTES("./src/main/resources/pacientes.txt"),
 	FILE_USUARIOS("./src/main/resources/usuarios.txt"),
 	FILE_SUCURSALES("./src/main/resources/sucursales.txt"),
-	FILE_PRACTICAS("./src/main/resources/practicas.txt");
+	FILE_PRACTICAS("./src/main/resources/practicas.txt"),
+	FILE_PETICIONES("./src/main/resources/peticiones.txt");
 	
 	private String name;
 
