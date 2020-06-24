@@ -1,5 +1,8 @@
 package main.java.vista.estudio;
 
+import java.util.ArrayList;
+
+import main.java.Interface.IDto;
 import main.java.controller.PeticionController;
 import main.java.controller.PracticaController;
 import main.java.dto.EstudioDTO;
@@ -11,7 +14,7 @@ public class EstudioTable extends ITable {
 	public EstudioTable(PeticionDTO peticionDto) {
 		columnNames = new String[] { "Practica", "Resultado"}; 
 		columnClasses = new Class[] { String.class, String.class}; 
-		lista = PeticionController.INSTANCE.getAllEstudiosDTO(peticionDto);
+		lista = peticionDto != null ? PeticionController.INSTANCE.getAllEstudiosDTO(peticionDto) : new ArrayList<IDto>();
 	}
     
 	public Object getValueAt(int rowIndex, int columnIndex) {
