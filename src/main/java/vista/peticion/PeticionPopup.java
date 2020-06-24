@@ -67,7 +67,6 @@ public class PeticionPopup extends IPopup {
 				estudioView.setFrameVisible();
 			}
 		});
-
 		
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(

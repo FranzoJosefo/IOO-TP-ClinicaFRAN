@@ -4,7 +4,7 @@ import main.java.enumeration.UsuarioTipo;
 
 public interface OnLoginCallback {
 	
-	public void onLoginSuccess(UsuarioTipo tipo);
+	public void onLoginSuccess();
 	
 	public void onLoginFailure();
 }

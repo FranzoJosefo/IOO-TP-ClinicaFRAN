@@ -14,6 +14,7 @@ import main.java.controller.LoginController;
 import main.java.controller.OnLoginCallback;
 import main.java.dto.CredentialsDTO;
 import main.java.enumeration.UsuarioTipo;
+import main.java.vista.home.HomeView;
 
 import java.awt.Color;
 import javax.swing.JPasswordField;
@@ -66,9 +67,10 @@ public class LoginView extends JFrame {
 						new OnLoginCallback() {
 
 							@Override
-							public void onLoginSuccess(UsuarioTipo usuarioTipo) {
-								setVisible(false);
-//								
+							public void onLoginSuccess() {
+								HomeView homeView = new HomeView();
+								homeView.setVisible(true);
+								dispose();
 							}
 
 							@Override

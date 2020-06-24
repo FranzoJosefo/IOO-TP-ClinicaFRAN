@@ -52,7 +52,7 @@ public abstract class IView {
 		
 		frame = new JFrame();
 		frame.setBounds(0, 0, width, height);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		JPanel panel = new JPanel();
 		panel.setBorder(new EmptyBorder(10, 0, 0, 0));
