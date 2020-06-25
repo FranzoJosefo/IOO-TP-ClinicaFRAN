@@ -34,6 +34,7 @@ public class EstudioView extends IView {
 		entidadTable = new EstudioTable(peticionDto);
 		this.peticionDto = peticionDto;
 		init("Estudios", 400, 250);
+		
 	}
 	
 	protected void agregarRegistro() {

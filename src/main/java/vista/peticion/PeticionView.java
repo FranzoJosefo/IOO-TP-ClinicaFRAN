@@ -27,14 +27,24 @@ public class PeticionView extends IView {
 		init("Peticiones", 1000, 350);
 	}
 	
+//	protected void agregarRegistro() {
+//		try {
+//			PeticionPopup dialog = new PeticionPopup(frame);
+//			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+//			dialog.setVisible(true);
+//			if (dialog.getModalResult() == ModalResult.OK)
+//				PeticionController.INSTANCE.createPeticion(dialog.getPeticion());
+//				entidadTable.agregar(dialog.getPeticion());
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}				
+//	}
+	
 	protected void agregarRegistro() {
 		try {
-			PeticionPopup dialog = new PeticionPopup(frame);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-			if (dialog.getModalResult() == ModalResult.OK)
-				PeticionController.INSTANCE.createPeticion(dialog.getPeticion());
-				entidadTable.agregar(dialog.getPeticion());
+			AgregarPeticionView view = new AgregarPeticionView();
+			view.setVisible(true);
+					
 		} catch (Exception e) {
 			e.printStackTrace();
 		}				

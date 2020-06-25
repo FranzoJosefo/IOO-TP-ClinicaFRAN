@@ -29,5 +29,9 @@ public class PeticionTable extends ITable {
 			default: return null; 
 		}
 	}
+	
+	public void refreshLista() {
+		lista = PeticionController.INSTANCE.getAllPeticionesDTO();
+	}
 
 }

@@ -14,7 +14,7 @@ public class EstudioTable extends ITable {
 	public EstudioTable(PeticionDTO peticionDto) {
 		columnNames = new String[] { "Practica", "Resultado"}; 
 		columnClasses = new Class[] { String.class, String.class}; 
-		lista = peticionDto != null ? PeticionController.INSTANCE.getAllEstudiosDTO(peticionDto) : new ArrayList<IDto>();
+		lista = peticionDto.getEstudios()!=null ? PeticionController.INSTANCE.getAllEstudiosDTO(peticionDto) : new ArrayList<IDto>();
 	}
     
 	public Object getValueAt(int rowIndex, int columnIndex) {
